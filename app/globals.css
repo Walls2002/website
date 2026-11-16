@@ -1,0 +1,262 @@
+@import "tailwindcss";
+
+:root {
+  --background: #efe7da;
+  --foreground: #2e2219;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-montserrat);
+  --font-serif: var(--font-playfair);
+}
+
+/*
+ * Kin Kitchen palette, sampled from the brand's own materials: the chocolate
+ * ink of the K-heart-K monogram, the oat ground it sits on, the butter tan of
+ * the pre-order posters and their toffee accent.
+ */
+@theme {
+  /* Chocolate: the logo ink. 10.6:1 on oat, 11.9:1 on white. */
+  --color-brand: #543c2a;
+  --color-brand-dark: #3a2a1c;
+  /* Butter tan from the posters; fills the big quiet shapes. */
+  --color-brand-soft: #ead4ae;
+  /* Panels on the oat page ground: a lighter wash of it. */
+  --color-oat: #f8f2e9;
+  --color-oat-line: #ddd0bc;
+  /* Butter fields (posters) and a lighter wash of them. */
+  --color-latte: #ead4ae;
+  --color-latte-soft: #f6ecdb;
+  /* Toffee: the posters' burnt-orange accent. 4.6:1 on white. */
+  --color-caramel: #b34f17;
+  /* Toffee for small text on butter: 5.3:1 on latte-soft. */
+  --color-caramel-dark: #8f3d0f;
+  --color-ink: #2e2219;
+  --color-muted: #6b5a4c;
+  --color-cream: #efe6d9;
+  --color-scroll-thumb: #d6c7b2;
+  --color-scroll-thumb-hover: #a88f74;
+
+  /*
+   * Entrances for the LCP images. These run in CSS from the first paint (no
+   * opacity, transform only) so the image counts as painted before any JS
+   * hydrates. `backwards` leaves no transform behind once the entrance ends;
+   * GSAP's scroll parallax lives on a parent element so the two never clash.
+   */
+  --animate-hero-drop: hero-drop 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s backwards;
+  --animate-card-in: card-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  --animate-pop-in: pop-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s backwards;
+
+  @keyframes hero-drop {
+    from {
+      transform: translateY(-140px) rotate(-5deg);
+    }
+  }
+
+  @keyframes card-in {
+    from {
+      transform: scale(0.97);
+    }
+  }
+
+  @keyframes pop-in {
+    from {
+      transform: scale(0.85) rotate(-6deg);
+    }
+  }
+}
+
+/*
+ * Site container: full width with comfortable gutters on phones and tablets,
+ * capped at 80% of the viewport from laptop widths up.
+ */
+@utility container-site {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+
+  @media (width >= 64rem) {
+    max-width: 80%;
+    padding-inline: 0;
+  }
+}
+
+/*
+ * Home hero: exactly one screen tall under the sticky header, on every device.
+ * `dvh` follows the mobile browser bars as they show and hide (svh first as a
+ * fallback). Type and the arch photo size from the height too (see hero.tsx),
+ * so a short laptop screen shrinks the hero instead of pushing it below the fold.
+ *
+ * Phones and portrait tablets: headline, intro, then the photo takes whatever
+ * height is left, with the buttons at the bottom within thumb reach. Landscape
+ * tablets and up: two columns, the text centred against a full-height photo.
+ */
+:root {
+  --header-h: 73px;
+
+  @media (width >= 40rem) {
+    --header-h: 81px;
+  }
+}
+
+.hero-fit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(9rem, 1fr) auto;
+  grid-template-areas: "title" "copy" "visual" "cta";
+  row-gap: clamp(0.75rem, 2.2dvh, 1.5rem);
+  height: max(30rem, calc(100svh - var(--header-h)));
+  height: max(30rem, calc(100dvh - var(--header-h)));
+  padding-block: clamp(1rem, 3.5dvh, 3rem);
+
+  /* Two columns on landscape tablets and wider; portrait tablets keep the stacked phone layout. */
+  @media (width >= 64rem), (width >= 48rem) and (orientation: landscape) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    grid-template-rows: 1fr auto auto auto 1fr;
+    grid-template-areas: ". visual" "title visual" "copy visual" "cta visual" ". visual";
+    column-gap: clamp(2rem, 4vw, 3rem);
+    row-gap: 0;
+    height: max(24rem, calc(100svh - var(--header-h)));
+    height: max(24rem, calc(100dvh - var(--header-h)));
+  }
+}
+
+/*
+ * Pointer cursor on everything interactive. Tailwind v4's preflight leaves buttons
+ * on the default arrow, so this covers buttons, links, ARIA widgets and native
+ * pickers globally instead of relying on a class on every element.
+ */
+@layer base {
+  a[href],
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [role="option"],
+  [role="tab"],
+  [role="combobox"],
+  summary,
+  select,
+  label:has(> input[type="checkbox"], > input[type="radio"]),
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="submit"],
+  input[type="button"] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
+
+/*
+ * No orphans: headings and short UI labels balance their lines, while running
+ * copy uses "pretty" wrapping so the last line never holds a lone word.
+ * Neither adds lines; they only redistribute words across the existing ones.
+ * Never remove these or force breaks with <br> / &nbsp; (see AGENTS.md).
+ */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  label,
+  button {
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  blockquote,
+  dt,
+  dd,
+  figcaption {
+    text-wrap: pretty;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.font-serif {
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide above-the-fold animated elements until GSAP takes over (see layout). */
+html.motion-pending [data-intro] {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/*
+ * Thin scrollbars everywhere: the page and every inner scroll area (the
+ * basket list, selects, the mobile drawer, the date picker). Chromium 121+
+ * ignores ::-webkit-scrollbar once scrollbar-width/scrollbar-color are set,
+ * so the standard properties only go to browsers without the pseudo-elements
+ * (Firefox); Chromium and Safari get the rounded thumb with a hover state.
+ * `.no-scrollbar` below still wins because it is unlayered.
+ */
+@layer base {
+  @supports not selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-scroll-thumb) transparent;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  /* A transparent border keeps the thumb 4px wide inside a 10px hit area. */
+  ::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background: var(--color-scroll-thumb) padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover,
+  ::-webkit-scrollbar-thumb:active {
+    border-width: 2px;
+    background-color: var(--color-scroll-thumb-hover);
+  }
+
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+}
+
+/* Hide scrollbars on horizontal snap rails while keeping them scrollable. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

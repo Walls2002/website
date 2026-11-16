@@ -1,0 +1,192 @@
+{
+  "/images/about-oven.webp": {
+    "w": 1271,
+    "h": 682,
+    "v": "8a325f2a"
+  },
+  "/images/bagged-brownies.webp": {
+    "w": 1600,
+    "h": 1230,
+    "v": "6d6a7919"
+  },
+  "/images/birthday-box.webp": {
+    "w": 1440,
+    "h": 1919,
+    "v": "3b5b6bda"
+  },
+  "/images/categories/brownies.webp": {
+    "w": 192,
+    "h": 192,
+    "v": "02b60a24"
+  },
+  "/images/categories/cakes.webp": {
+    "w": 192,
+    "h": 192,
+    "v": "df15f6b9"
+  },
+  "/images/categories/cupcakes.webp": {
+    "w": 192,
+    "h": 192,
+    "v": "8213836a"
+  },
+  "/images/categories/loaves.webp": {
+    "w": 192,
+    "h": 192,
+    "v": "c8c0d36b"
+  },
+  "/images/categories/treats.webp": {
+    "w": 192,
+    "h": 192,
+    "v": "d20e1ce3"
+  },
+  "/images/gift-boxes.webp": {
+    "w": 1220,
+    "h": 1271,
+    "v": "ff09bcf3"
+  },
+  "/images/gift-loaves.webp": {
+    "w": 789,
+    "h": 974,
+    "v": "07bbbaaf"
+  },
+  "/images/hero-assortment.webp": {
+    "w": 1440,
+    "h": 1538,
+    "v": "5fd244a3"
+  },
+  "/images/hero-streusel.webp": {
+    "w": 1440,
+    "h": 1440,
+    "v": "86b2d452"
+  },
+  "/images/kin-monogram-oat.png": {
+    "w": 628,
+    "h": 480,
+    "v": "7207907c"
+  },
+  "/images/kin-monogram.png": {
+    "w": 628,
+    "h": 480,
+    "v": "b4d3e7f1"
+  },
+  "/images/labelled-boxes.webp": {
+    "w": 1440,
+    "h": 1662,
+    "v": "c9400bcc"
+  },
+  "/images/moms-day-cakes.webp": {
+    "w": 1600,
+    "h": 1132,
+    "v": "127568fa"
+  },
+  "/images/number-cake-scene.webp": {
+    "w": 1220,
+    "h": 1237,
+    "v": "94fe9156"
+  },
+  "/images/okasan-cake.webp": {
+    "w": 1440,
+    "h": 1676,
+    "v": "8a983a8c"
+  },
+  "/images/oven-glow.webp": {
+    "w": 1600,
+    "h": 672,
+    "v": "5cfc1693"
+  },
+  "/images/products/banana-choco-chip-loaf.webp": {
+    "w": 896,
+    "h": 896,
+    "v": "94d7b703"
+  },
+  "/images/products/banana-cinnamon-streusel-loaf.webp": {
+    "w": 1000,
+    "h": 1000,
+    "v": "8ea8146c"
+  },
+  "/images/products/banana-overload-loaf.webp": {
+    "w": 896,
+    "h": 896,
+    "v": "2b61c658"
+  },
+  "/images/products/brownie-box.webp": {
+    "w": 1000,
+    "h": 1000,
+    "v": "d96ab241"
+  },
+  "/images/products/brownies-by-the-piece.webp": {
+    "w": 1000,
+    "h": 1000,
+    "v": "9be87a3d"
+  },
+  "/images/products/chocolate-chip-cookies.webp": {
+    "w": 1000,
+    "h": 1000,
+    "v": "09e2d0bf"
+  },
+  "/images/products/cinnamon-rolls.webp": {
+    "w": 1000,
+    "h": 1000,
+    "v": "f043a45a"
+  },
+  "/images/products/coconut-macaroons.webp": {
+    "w": 700,
+    "h": 671,
+    "v": "1b096989"
+  },
+  "/images/products/crinkles.webp": {
+    "w": 700,
+    "h": 671,
+    "v": "6d93754c"
+  },
+  "/images/products/cupcake-box.webp": {
+    "w": 890,
+    "h": 890,
+    "v": "606f9f5e"
+  },
+  "/images/products/fondant-cake.webp": {
+    "w": 863,
+    "h": 863,
+    "v": "90a5296e"
+  },
+  "/images/products/icing-cake.webp": {
+    "w": 1000,
+    "h": 1000,
+    "v": "4c0c9e1e"
+  },
+  "/images/products/message-brownie-cake.webp": {
+    "w": 691,
+    "h": 691,
+    "v": "fa11ac16"
+  },
+  "/images/products/message-cupcakes.webp": {
+    "w": 678,
+    "h": 678,
+    "v": "64c58c51"
+  },
+  "/images/products/number-cake.webp": {
+    "w": 1000,
+    "h": 1000,
+    "v": "25fd40d0"
+  },
+  "/images/promo-cake.webp": {
+    "w": 896,
+    "h": 1053,
+    "v": "e714fca9"
+  },
+  "/images/promo-loaves.webp": {
+    "w": 1118,
+    "h": 686,
+    "v": "0ad4b44c"
+  },
+  "/images/review-cake.webp": {
+    "w": 896,
+    "h": 1053,
+    "v": "e714fca9"
+  },
+  "/images/review-messenger.webp": {
+    "w": 718,
+    "h": 926,
+    "v": "7b5aa005"
+  }
+}

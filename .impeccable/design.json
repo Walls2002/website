@@ -1,0 +1,502 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-16T16:43:19+00:00",
+  "title": "Design System: Kin Kitchen",
+  "extensions": {
+    "colorMeta": {
+      "chocolate": {
+        "role": "primary",
+        "displayName": "Monogram Chocolate",
+        "canonical": "#543c2a",
+        "oklch": "oklch(37.8% 0.044 57)",
+        "cssVar": "--color-brand",
+        "tonalRamp": [
+          "#180600",
+          "#37210f",
+          "#573f2d",
+          "#7a604d",
+          "#9e836f",
+          "#c4a893",
+          "#e8cab5",
+          "#ffe8d2"
+        ]
+      },
+      "chocolate-deep": {
+        "role": "primary",
+        "displayName": "Chocolate Deep",
+        "canonical": "#3a2a1c",
+        "oklch": "oklch(30.0% 0.034 62)",
+        "cssVar": "--color-brand-dark",
+        "tonalRamp": [
+          "#150800",
+          "#322315",
+          "#524133",
+          "#746253",
+          "#988575",
+          "#beaa99",
+          "#e2cdbb",
+          "#ffead8"
+        ]
+      },
+      "butter": {
+        "role": "secondary",
+        "displayName": "Poster Butter",
+        "canonical": "#ead4ae",
+        "oklch": "oklch(87.9% 0.056 81)",
+        "cssVar": "--color-brand-soft / --color-latte",
+        "tonalRamp": [
+          "#170700",
+          "#342300",
+          "#544220",
+          "#766340",
+          "#9b8662",
+          "#c0ab86",
+          "#e4cea8",
+          "#ffebc5"
+        ]
+      },
+      "butter-wash": {
+        "role": "secondary",
+        "displayName": "Butter Wash",
+        "canonical": "#f6ecdb",
+        "oklch": "oklch(94.6% 0.025 81)",
+        "cssVar": "--color-latte-soft",
+        "tonalRamp": [
+          "#100a02",
+          "#2d2518",
+          "#4c4436",
+          "#6d6556",
+          "#918878",
+          "#b6ad9d",
+          "#d9d0bf",
+          "#f7eddc"
+        ]
+      },
+      "toffee": {
+        "role": "tertiary",
+        "displayName": "Toffee",
+        "canonical": "#b34f17",
+        "oklch": "oklch(54.8% 0.145 45)",
+        "cssVar": "--color-caramel",
+        "tonalRamp": [
+          "#210000",
+          "#471200",
+          "#712d05",
+          "#9e4b20",
+          "#c37049",
+          "#e49978",
+          "#ffc0a3",
+          "#ffe0c7"
+        ]
+      },
+      "toffee-deep": {
+        "role": "tertiary",
+        "displayName": "Toffee Deep",
+        "canonical": "#8f3d0f",
+        "oklch": "oklch(46.4% 0.124 44)",
+        "cssVar": "--color-caramel-dark",
+        "tonalRamp": [
+          "#210000",
+          "#471200",
+          "#712d06",
+          "#9e4b20",
+          "#c37049",
+          "#e49978",
+          "#ffc0a3",
+          "#ffe0c7"
+        ]
+      },
+      "oat-ground": {
+        "role": "neutral",
+        "displayName": "Oat Ground",
+        "canonical": "#efe7da",
+        "oklch": "oklch(93.1% 0.019 80)",
+        "cssVar": "--background",
+        "tonalRamp": [
+          "#0f0a03",
+          "#2b261c",
+          "#4b4439",
+          "#6c655a",
+          "#8f887c",
+          "#b4ada1",
+          "#d8d0c3",
+          "#f5ede0"
+        ]
+      },
+      "oat-panel": {
+        "role": "neutral",
+        "displayName": "Oat Panel",
+        "canonical": "#f8f2e9",
+        "oklch": "oklch(96.3% 0.014 78)",
+        "cssVar": "--color-oat",
+        "tonalRamp": [
+          "#0e0a05",
+          "#2a261f",
+          "#49443d",
+          "#6a655e",
+          "#8e8880",
+          "#b3ada5",
+          "#d6d0c7",
+          "#f4eee5"
+        ]
+      },
+      "oat-line": {
+        "role": "neutral",
+        "displayName": "Oat Line",
+        "canonical": "#ddd0bc",
+        "oklch": "oklch(86.3% 0.031 78)",
+        "cssVar": "--color-oat-line",
+        "tonalRamp": [
+          "#120900",
+          "#2f2515",
+          "#4e4332",
+          "#706453",
+          "#938775",
+          "#b9ac99",
+          "#dccfbb",
+          "#faedd8"
+        ]
+      },
+      "cocoa-ink": {
+        "role": "neutral",
+        "displayName": "Cocoa Ink",
+        "canonical": "#2e2219",
+        "oklch": "oklch(26.3% 0.024 58)",
+        "cssVar": "--color-ink / --foreground",
+        "tonalRamp": [
+          "#130803",
+          "#30241b",
+          "#4f4238",
+          "#716359",
+          "#95867b",
+          "#baab9f",
+          "#decdc2",
+          "#fcebdf"
+        ]
+      },
+      "cocoa-muted": {
+        "role": "neutral",
+        "displayName": "Cocoa Muted",
+        "canonical": "#6b5a4c",
+        "oklch": "oklch(48.0% 0.031 61)",
+        "cssVar": "--color-muted",
+        "tonalRamp": [
+          "#140801",
+          "#322316",
+          "#524134",
+          "#746254",
+          "#988576",
+          "#bdaa9a",
+          "#e1cdbd",
+          "#ffeada"
+        ]
+      },
+      "crumb": {
+        "role": "neutral",
+        "displayName": "Crumb",
+        "canonical": "#efe6d9",
+        "oklch": "oklch(92.8% 0.020 77)",
+        "cssVar": "--color-cream",
+        "tonalRamp": [
+          "#100a03",
+          "#2c251b",
+          "#4b4439",
+          "#6d655a",
+          "#90887c",
+          "#b5ada0",
+          "#d8d0c3",
+          "#f6ede0"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#262626",
+          "#3b3b3b",
+          "#525252",
+          "#6b6b6b",
+          "#8a8a8a",
+          "#adadad",
+          "#d4d4d4",
+          "#ffffff"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero's large italic words in chocolate, alternating with smaller roman lines."
+      },
+      "poster": {
+        "displayName": "Poster",
+        "purpose": "Closing CTA headline only: Playfair 900, the poster voice."
+      },
+      "page-title": {
+        "displayName": "Page title",
+        "purpose": "The single h1 in each inner page hero."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Every section h2."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card, band and feature titles; 18 to 24px."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Intros and running copy in cocoa muted; 16px from 640px."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Buttons, nav, field labels, product names; 500 to 600."
+      },
+      "motto": {
+        "displayName": "Motto",
+        "purpose": "Logo lockup motto and hero stamp ring only; uppercase, 80% opacity. Part of the mark."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card-rest",
+        "value": "0 1px 3px 0 rgb(84 60 42 / 0.05), 0 1px 2px -1px rgb(84 60 42 / 0.05)",
+        "purpose": "Product cards at rest."
+      },
+      {
+        "name": "card-lift",
+        "value": "0 10px 15px -3px rgb(84 60 42 / 0.15), 0 4px 6px -4px rgb(84 60 42 / 0.15)",
+        "purpose": "Product card hover, 300ms."
+      },
+      {
+        "name": "button-glow",
+        "value": "0 4px 6px -1px rgb(84 60 42 / 0.25), 0 2px 4px -2px rgb(84 60 42 / 0.25)",
+        "purpose": "Primary buttons and the selected filter chip; the toffee button uses toffee at 30%."
+      },
+      {
+        "name": "popover",
+        "value": "0 25px 50px -12px rgb(46 34 25 / 0.10)",
+        "purpose": "Menu dropdown and basket panel (15% on the basket); the select list uses the xl size."
+      },
+      {
+        "name": "photo-arch",
+        "value": "0 30px 40px -10px rgba(84,60,42,0.35)",
+        "purpose": "The hero's arched photo frame only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-entrance",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "CSS entrances for LCP images; transform only, never opacity."
+      },
+      {
+        "name": "hero-drop",
+        "value": "1.1s ease-entrance 0.15s backwards; from translateY(-140px) rotate(-5deg)",
+        "purpose": "Hero photo arch drop-in."
+      },
+      {
+        "name": "card-in",
+        "value": "0.7s ease-entrance backwards; from scale(0.97)",
+        "purpose": "Page hero oat card and the hero arch."
+      },
+      {
+        "name": "pop-in",
+        "value": "0.9s ease-entrance 0.2s backwards; from scale(0.85) rotate(-6deg)",
+        "purpose": "Page hero blob image."
+      },
+      {
+        "name": "gsap-reveal",
+        "value": "power3.out, 0.6 to 0.9s, stagger 0.08 to 0.1s; headline lines rise from yPercent 110 inside an overflow-hidden mask",
+        "purpose": "Scroll-triggered section reveals, once, at top 75 to 80%."
+      },
+      {
+        "name": "state-transitions",
+        "value": "200ms colour; 300ms card shadow; 500ms card image zoom to 105%",
+        "purpose": "Buttons, links, chips, fields and product cards."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "GSAP and CSS entrances skip; smooth scroll off."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px",
+        "note": "Container caps at 80% of the viewport with no gutter."
+      },
+      {
+        "name": "xl",
+        "value": "1280px",
+        "note": "Desktop nav replaces the drawer."
+      },
+      {
+        "name": "2xl",
+        "value": "1536px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Default call to action: chocolate pill with a chocolate glow.",
+      "html": "<button class=\"ds-btn-primary\">Start a pre-order</button>",
+      "css": ".ds-btn-primary{font-family: Montserrat, system-ui, sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 28px;border:0;border-radius:9999px;background:#543c2a;color:#fff;font-size:15px;font-weight:500;box-shadow:0 4px 6px -1px rgb(84 60 42/.25),0 2px 4px -2px rgb(84 60 42/.25);transition:background-color .2s;cursor:pointer}.ds-btn-primary:hover{background:#3a2a1c}.ds-btn-primary:focus-visible{outline:2px solid #543c2a;outline-offset:2px}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action beside a primary, on light grounds.",
+      "html": "<button class=\"ds-btn-outline\">Plan a cake</button>",
+      "css": ".ds-btn-outline{font-family: Montserrat, system-ui, sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 28px;border:1px solid rgb(84 60 42/.4);border-radius:9999px;background:#fff;color:#2e2219;font-size:15px;font-weight:500;transition:color .2s,border-color .2s;cursor:pointer}.ds-btn-outline:hover{border-color:#543c2a;color:#543c2a}.ds-btn-outline:focus-visible{outline:2px solid #543c2a;outline-offset:2px}"
+    },
+    {
+      "name": "White Button",
+      "kind": "button",
+      "refersTo": "button-white",
+      "description": "Action on chocolate grounds (CTA card, loaf promo).",
+      "html": "<div style=\"background:#543c2a;padding:24px;border-radius:24px\"><button class=\"ds-btn-white\">Start a pre-order</button></div>",
+      "css": ".ds-btn-white{font-family: Montserrat, system-ui, sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 28px;border:0;border-radius:9999px;background:#fff;color:#2e2219;font-size:15px;font-weight:500;transition:background-color .2s;cursor:pointer}.ds-btn-white:hover{background:#f8f2e9}.ds-btn-white:focus-visible{outline:2px solid #fff;outline-offset:2px}"
+    },
+    {
+      "name": "Toffee Button",
+      "kind": "button",
+      "refersTo": "button-toffee",
+      "description": "The cake promo's small call on butter; a pinch of toffee.",
+      "html": "<button class=\"ds-btn-toffee\">Plan a cake</button>",
+      "css": ".ds-btn-toffee{font-family: Montserrat, system-ui, sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 20px;border:0;border-radius:9999px;background:#b34f17;color:#fff;font-size:14px;font-weight:500;box-shadow:0 4px 6px -1px rgb(179 79 23/.3),0 2px 4px -2px rgb(179 79 23/.3);transition:background-color .2s;cursor:pointer}.ds-btn-toffee:hover{background:#8f3d0f}.ds-btn-toffee:focus-visible{outline:2px solid #543c2a;outline-offset:2px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Order form field with label above; butter hover, chocolate focus ring.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Full name</span><input class=\"ds-input\" placeholder=\"Juana Dela Cruz\"></label>",
+      "css": ".ds-field{display:block;font-family: Montserrat, system-ui, sans-serif;}.ds-field-label{display:block;margin-bottom:8px;font-size:14px;font-weight:500;color:#2e2219}.ds-input{font-family: Montserrat, system-ui, sans-serif;width:100%;min-height:48px;padding:0 16px;border:1px solid #ddd0bc;border-radius:12px;background:#fff;color:#2e2219;font-size:15px;transition:border-color .2s,box-shadow .2s}.ds-input::placeholder{color:rgb(107 90 76/.7)}.ds-input:hover{border-color:#ead4ae}.ds-input:focus{outline:none;border-color:#543c2a;box-shadow:0 0 0 4px rgb(84 60 42/.1)}"
+    },
+    {
+      "name": "Category Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip-category",
+      "description": "Menu filter pill with a round photo icon; selected is chocolate.",
+      "html": "<div style=\"display:flex;gap:8px\"><button class=\"ds-chip ds-chip-on\">All treats</button><button class=\"ds-chip\"><span class=\"ds-chip-photo\"></span>Banana loaves</button></div>",
+      "css": ".ds-chip{font-family: Montserrat, system-ui, sans-serif;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid #ddd0bc;border-radius:9999px;background:#fff;color:#2e2219;font-size:14px;font-weight:500;transition:background-color .2s,border-color .2s;cursor:pointer}.ds-chip:hover{border-color:#ead4ae;background:#f8f2e9}.ds-chip:focus-visible{outline:2px solid #543c2a;outline-offset:2px}.ds-chip-on,.ds-chip-on:hover{border-color:#543c2a;background:#543c2a;color:#fff;box-shadow:0 4px 6px -1px rgb(84 60 42/.25)}.ds-chip-photo{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#c4a893,#7a604d)}"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "refersTo": "card-product",
+      "description": "White card, square photo well, toffee-deep category, round chocolate add disc; lifts on hover.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-img\"></div><div class=\"ds-card-body\"><div><h3 class=\"ds-card-name\">Banana loaf with choco chips</h3><p class=\"ds-card-cat\">Banana loaves</p></div><button class=\"ds-card-add\" aria-label=\"Add to basket\"><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"20\" r=\"1\"/><circle cx=\"18\" cy=\"20\" r=\"1\"/><path d=\"M2 3h3l2.7 12.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 7H6\"/></svg></button></div></article>",
+      "css": ".ds-card{font-family: Montserrat, system-ui, sans-serif;width:240px;padding:10px;border:1px solid #ddd0bc;border-radius:16px;background:#fff;box-shadow:0 1px 3px 0 rgb(84 60 42/.05),0 1px 2px -1px rgb(84 60 42/.05);transition:box-shadow .3s}.ds-card:hover{box-shadow:0 10px 15px -3px rgb(84 60 42/.15),0 4px 6px -4px rgb(84 60 42/.15)}.ds-card-img{aspect-ratio:1.15;border-radius:12px;background:linear-gradient(135deg,#c4a893,#7a604d)}.ds-card-body{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;padding:16px 8px 8px}.ds-card-name{margin:0;font-size:16px;font-weight:500;line-height:1.35;color:#2e2219}.ds-card-cat{margin:6px 0 0;font-size:14px;font-weight:500;color:#8f3d0f}.ds-card-add{display:grid;place-items:center;flex-shrink:0;width:44px;height:44px;border:0;border-radius:9999px;background:#543c2a;color:#fff;transition:background-color .2s;cursor:pointer}.ds-card-add:hover{background:#3a2a1c}.ds-card-add:focus-visible{outline:2px solid #543c2a;outline-offset:2px}"
+    },
+    {
+      "name": "Category Tile",
+      "kind": "custom",
+      "refersTo": "tile-category",
+      "description": "Home category link: butter-wash tile with a round product photo; butter on hover.",
+      "html": "<a class=\"ds-tile\" href=\"#\"><span class=\"ds-tile-photo\"></span><span>Brownies</span></a>",
+      "css": ".ds-tile{font-family: Montserrat, system-ui, sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:120px;aspect-ratio:1.1;padding:8px;border-radius:16px;background:#f6ecdb;color:#2e2219;font-size:14px;font-weight:600;text-decoration:none;transition:background-color .2s}.ds-tile:hover{background:#ead4ae}.ds-tile:focus-visible{outline:2px solid #543c2a;outline-offset:2px}.ds-tile-photo{width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#9e836f,#37210f);box-shadow:0 1px 3px 0 rgb(84 60 42/.2)}"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "nav-header",
+      "description": "Sticky translucent oat header: lockup (monogram is an image asset in the build; a text stand-in here), pill nav links, small primary button.",
+      "html": "<header class=\"ds-nav\"><span class=\"ds-logo\"><span class=\"ds-logo-k\">K&#9825;K</span><span class=\"ds-logo-words\"><span>Kin</span><span>Kitchen</span></span></span><nav class=\"ds-nav-links\"><a href=\"#\">Home</a><a href=\"#\">Menu</a><a href=\"#\">Our story</a><a href=\"#\">Pick-up</a></nav><a class=\"ds-nav-cta\" href=\"#\">Pre-order</a></header>",
+      "css": ".ds-nav{font-family: Montserrat, system-ui, sans-serif;display:flex;align-items:center;justify-content:space-between;gap:16px;height:80px;padding:0 24px;border-bottom:1px solid rgb(221 208 188/.7);background:rgb(239 231 218/.85);backdrop-filter:blur(8px)}.ds-logo{display:flex;align-items:center;gap:10px;color:#543c2a}.ds-logo-k{font-family: 'Playfair Display', Georgia, serif;font-size:28px;font-weight:500}.ds-logo-words{display:flex;flex-direction:column;font-size:21px;font-weight:500;line-height:1.05}.ds-nav-links{display:flex;gap:4px}.ds-nav-links a{padding:8px 16px;border-radius:9999px;color:#2e2219;font-size:15px;font-weight:500;text-decoration:none;transition:color .2s}.ds-nav-links a:hover{color:#543c2a}.ds-nav-links a:focus-visible{outline:2px solid #543c2a;outline-offset:2px}.ds-nav-cta{display:inline-flex;align-items:center;min-height:40px;padding:0 20px;border-radius:9999px;background:#543c2a;color:#fff;font-size:14px;font-weight:500;text-decoration:none;transition:background-color .2s}.ds-nav-cta:hover{background:#3a2a1c}"
+    },
+    {
+      "name": "Oat Panel",
+      "kind": "card",
+      "refersTo": "panel-oat",
+      "description": "Page-level content panel, a step lighter than the oat ground; no border, no shadow.",
+      "html": "<div style=\"background:#efe7da;padding:24px\"><section class=\"ds-panel\"><h2 class=\"ds-panel-h\">Pick your kind of sweet</h2><p class=\"ds-panel-p\">Banana loaves for merienda, brownies to share around, and cakes for the days that need one.</p></section></div>",
+      "css": ".ds-panel{padding:40px;border-radius:24px;background:#f8f2e9}.ds-panel-h{margin:0;font-family: 'Playfair Display', Georgia, serif;font-size:2.25rem;font-weight:500;letter-spacing:-.005em;line-height:1.25;color:#2e2219}.ds-panel-p{font-family: Montserrat, system-ui, sans-serif;margin:16px 0 0;max-width:28rem;font-size:16px;line-height:1.625;color:#6b5a4c}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Box Label",
+    "overview": "Kin Kitchen looks like its own packaging: chocolate ink on oat card, a butter-tan field, a toffee flourish, and the K-heart-K monogram stamped on the corner like the label on every box the sisters seal by hand. The site's structure, components, motion and agent rules (see `AGENTS.md`, which stays binding and is not repeated here) are the incumbent system, and this document records the visual world it now wears.\n\nThe voice is warm and unhurried, with real product photography doing the persuading. Playfair Display carries every heading the way it carries the pre-order posters, set soft (weight 500) for reading and pushed to black (900) only where the site speaks like a poster. Montserrat, the logo's face, carries everything a visitor reads or taps. Surfaces are soft, rounded, layered in tones of oat and butter rather than lines, with chocolate reserved for the bands and buttons that matter.\n\nDensity is relaxed: one idea per band, generous section rhythm, photography in large rounded crops and organic shapes (an arch, a blob, a stamp).",
+    "keyCharacteristics": [
+      "Oat page ground with lighter oat panels; chocolate bands for promises, CTA and footer.",
+      "Playfair Display headings in sentence case, italic for the emotional words; Montserrat for all UI.",
+      "Pill buttons, generous radii (12 to 24px), no hard edges anywhere.",
+      "Shadows tinted with chocolate, never grey.",
+      "The monogram lockup and its spaced-caps motto are the only uppercase on the site."
+    ],
+    "rules": [
+      {
+        "name": "The Panel On Ground Rule",
+        "body": "Content panels are a step lighter than the page (oat panel on oat ground), never the same tone and never a darker oat. The step is what reads as a card; there is no border on oat panels.",
+        "section": "colors"
+      },
+      {
+        "name": "The Toffee Pinch Rule",
+        "body": "Toffee is a flourish (a heart, a badge, one promo), never a section ground or a body-text colour. Small toffee text uses toffee deep.",
+        "section": "colors"
+      },
+      {
+        "name": "The Chocolate Shadow Rule",
+        "body": "Every shadow is tinted with chocolate or cocoa ink at low alpha. A neutral grey shadow does not exist in this world.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Weights of Playfair Rule",
+        "body": "Playfair is 500 everywhere it reads and 900 only for the poster-voice CTA. No 600 or 700 headings in between.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lockup Is The Only Caps Rule",
+        "body": "Uppercase spaced type belongs to the monogram lockup and its stamp. Headings, labels and buttons are sentence case, and nothing small sits above a heading (`AGENTS.md` rule 5).",
+        "section": "typography"
+      },
+      {
+        "name": "The Equal Words Rule",
+        "body": "In the logo lockup, \"Kin\" and \"Kitchen\" are stacked at the same size and weight (Montserrat 500, 19px, 21px from 640px) beside the monogram (40px, 44px from 640px). Never scale one word against the other.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lift On Intent Rule",
+        "body": "Shadows grow in response to hover or opening; nothing static carries more than the card-rest shadow except the hero arch and the stamp.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Round Photo Icon Rule",
+        "body": "Category marks are real product photos cropped to circles (56 to 64px in tiles, 40px in the menu dropdown), never drawn glyphs.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** set content panels in oat panel on the oat ground, and white cards inside them.",
+      "**Do** keep every heading in Playfair 500, sentence case; save Playfair 900 for the closing CTA headline.",
+      "**Do** use italic Playfair in chocolate (or toffee deep on butter) for the one emotional word or phrase in a hero, promo or quote.",
+      "**Do** tint every shadow with chocolate or cocoa ink at 5 to 35% alpha.",
+      "**Do** crop category marks and thumbnails from real Kin Kitchen photos, round.",
+      "**Do** keep the logo's \"Kin\" and \"Kitchen\" equal in size, and the motto in spaced caps under it.",
+      "**Do** follow `AGENTS.md` for content, copy, icon, glass, motion and scrollbar rules; it remains binding."
+    ],
+    "donts": [
+      "**Don't** put anything small or uppercase above a heading; the lockup motto and the stamp ring are the only spaced caps.",
+      "**Don't** use grey shadows, square corners or hard offset shadows.",
+      "**Don't** spread toffee across grounds or body text; it is a pinch.",
+      "**Don't** use Playfair at 600 or 700, or Montserrat for headings.",
+      "**Don't** draw icons beside headings, facts or contact lines; icons live only inside controls (`AGENTS.md` rule 5).",
+      "**Don't** set a panel darker than the oat ground or in the same tone as it."
+    ]
+  }
+}
