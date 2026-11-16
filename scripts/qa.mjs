@@ -399,6 +399,10 @@ for (const width of [1440, 390]) {
     await page.getByRole("button", { name: /^Send (order|message)$/ }).click();
     await page.waitForTimeout(900);
     if (!(await page.getByRole("status").filter({ hasText: /thank you/i }).count())) fail("/order/ form did not reach its sent state");
+    // The short note replaces a long form: it must land on screen, not above it.
+    await page.waitForTimeout(900);
+    const noteTop = await page.getByRole("status").filter({ hasText: /thank you/i }).first().evaluate((el) => el.getBoundingClientRect().top);
+    if (noteTop < 0 || noteTop > (await page.evaluate(() => window.innerHeight)) - 120) fail(`/order/ sent note is off screen (top ${Math.round(noteTop)}px)`);
     await aiTells(page, "/order/ sent state");
   }
   await context.close();

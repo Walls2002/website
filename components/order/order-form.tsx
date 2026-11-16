@@ -102,6 +102,17 @@ export function OrderForm() {
 
   const done = outcome.state === "sent" || outcome.state === "handoff";
 
+  // The long form collapses into a short note, which would leave a visitor who pressed
+  // Send at the bottom looking at empty page: bring the note into view and focus it.
+  useEffect(() => {
+    if (!done) return;
+    const section = ref.current;
+    if (!section) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    section.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    section.querySelector<HTMLElement>('[role="status"]')?.focus({ preventScroll: true });
+  }, [done]);
+
   useGSAP(
     () => {
       if (!done || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -190,7 +201,7 @@ export function OrderForm() {
           </p>
 
           {outcome.state === "sent" ? (
-            <div className="mt-8 rounded-2xl bg-white p-8 text-center" role="status">
+            <div tabIndex={-1} className="mt-8 rounded-2xl bg-white p-8 text-center outline-none" role="status">
               <p data-sent-text className="font-serif text-2xl text-ink">
                 Thank you, it&apos;s with us!
               </p>
@@ -206,7 +217,7 @@ export function OrderForm() {
               </span>
             </div>
           ) : outcome.state === "handoff" ? (
-            <div className="mt-8 rounded-2xl bg-white p-8 text-center" role="status">
+            <div tabIndex={-1} className="mt-8 rounded-2xl bg-white p-8 text-center outline-none" role="status">
               <p data-sent-text className="font-serif text-2xl text-ink">
                 Thank you! One last step
               </p>
