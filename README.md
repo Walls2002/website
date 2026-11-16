@@ -4,12 +4,11 @@ The public site for Kin Kitchen ("Sisterhood · Desserts · Est. 2026"), a desse
 
 ## Orders
 
-The basket and the order page (`/contact#order`) send each order to two places at once (`lib/send-order.ts`):
+The order page (`/order`) holds the order form with the menu inside it: visitors add treats right there (the same basket as the header and `/menu`), or switch to a celebration cake or a question. Sending calls one place (`lib/send-order.ts`):
 
-1. **The Kin Kitchen CRM**: the Supabase RPC `submit_web_order`, which drops the order in the CRM's "From the website" inbox on the Orders page. Run the CRM's `supabase/migrations/0010_web_orders.sql` first.
-2. **The owner's email**: Web3Forms, using an access key made with kinkitchen4@gmail.com.
+- **The Kin Kitchen CRM**: the Supabase RPC `submit_web_order`, which files it on the CRM's Inquiries page. Saving it also emails the owner: a database trigger calls the CRM's `notify-web-order` Edge Function, which sends through Brevo with a key kept in Supabase, never in this site (CRM migrations 0010 and 0012).
 
-Set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `NEXT_PUBLIC_WEB3FORMS_KEY` at build time (see `.env.example`). An order counts as sent when either one lands. With neither configured, the form hands the customer a prefilled email to send, so no order is silently lost.
+Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` at build time (see `.env.example`). Without them, or if the CRM can't be reached, the form hands the customer a prefilled email to send, so no order is silently lost. Old `/contact#order` links forward to `/order` in the browser.
 
 Prices are hidden on purpose and there are no shop hours: the owner confirms price, date and pick-up spot by message.
 
@@ -22,7 +21,8 @@ Prices are hidden on purpose and there are no shop hours: the owner confirms pri
 | `/about` | Sisterhood story and values, good-to-know band, how a batch comes together, promises band, review |
 | `/our-story` | Story intro, scroll-scrubbed timeline dated from Kin Kitchen's posts |
 | `/location` | The two pick-up points with Maps links, how pick-up works |
-| `/contact` | Contact cards, the order form (basket pre-order, celebration cake or question) with a date picker, FAQ |
+| `/order` | The order form: basket pre-order with the menu picker inside it, celebration cake or question, with a date picker. `?for=cake` or `?for=question` opens it on that kind |
+| `/contact` | Contact cards, a link to the order page, FAQ |
 
 The header (with the Menu dropdown, basket panel and mobile drawer) and the footer live in `app/layout.tsx`, so every page shares them.
 
@@ -129,4 +129,4 @@ npm run dev
 
 Open http://localhost:3000.
 
-Before handing over: `npm run typecheck && npm run lint && npm run build && npm run qa`. QA serves `out/` like a static host (`QA_PORT` sets its port), visits every built route at 1440 and 390 wide and fails on console errors, a missing or second h1, em dashes, horizontal overflow and the AI tells listed under "Keep it human", including with the header panels, mobile drawer and contact form states open. It also drives the date picker by keyboard and fails on a scrollbar that flashes while an overlay opens.
+Before handing over: `npm run typecheck && npm run lint && npm run build && npm run qa`. QA serves `out/` like a static host (`QA_PORT` sets its port), visits every built route at 1440 and 390 wide and fails on console errors, a missing or second h1, em dashes, horizontal overflow and the AI tells listed under "Keep it human", including with the header panels, mobile drawer, the order page's menu picker and form states open. It also drives the date picker by keyboard and fails on a scrollbar that flashes while an overlay opens.

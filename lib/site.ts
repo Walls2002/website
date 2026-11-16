@@ -74,13 +74,14 @@ export const site = {
     { label: "About us", href: "/about" },
     { label: "Our story", href: "/our-story" },
     { label: "Pick-up", href: "/location" },
-    { label: "Order", href: "/contact" },
+    { label: "Order", href: "/order" },
   ] satisfies NavItem[],
   help: [
     { label: "How pre-orders work", href: "/contact#faq" },
     { label: "Pick-up points", href: "/location" },
     { label: "Celebration cakes", href: "/menu?category=cakes" },
-    { label: "Send an order", href: "/contact#order" },
+    { label: "Send an order", href: "/order" },
+    { label: "Contact us", href: "/contact" },
   ] satisfies NavItem[],
 } as const;
 

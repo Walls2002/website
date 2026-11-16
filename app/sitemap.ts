@@ -5,9 +5,11 @@ import { site } from "@/lib/site";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return site.nav.map((item) => ({
-    url: `${site.url}${item.href === "/" ? "/" : `${item.href}/`}`,
-    changeFrequency: item.href === "/menu" ? "weekly" : "monthly",
-    priority: item.href === "/" ? 1 : 0.7,
+  // Every page the nav or the footer help links reach, once each (hashes and filters dropped).
+  const paths = Array.from(new Set([...site.nav, ...site.help].map((item) => item.href.split(/[?#]/)[0])));
+  return paths.map((path) => ({
+    url: `${site.url}${path === "/" ? "/" : `${path}/`}`,
+    changeFrequency: path === "/menu" ? "weekly" : "monthly",
+    priority: path === "/" ? 1 : 0.7,
   }));
 }

@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useCart } from "@/components/cart/cart-context";
 import { MinusIcon, PlusIcon } from "@/components/icons";
+import { MenuPicker } from "@/components/order/menu-picker";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DatePicker } from "@/components/ui/date-picker";
@@ -14,7 +14,10 @@ import { gsap, useGSAP, useMotion } from "@/lib/gsap";
 import { mailtoHref, sendOrder, type OrderKind, type OrderPayload } from "@/lib/send-order";
 import { pickupPoints, site } from "@/lib/site";
 
-type Enquiry = OrderKind | "question";
+type Enquiry = OrderKind;
+
+/** `/order?for=cake` and `/order?for=question` open the form on that kind of message. */
+const fromUrl: Record<string, Enquiry> = { cake: "custom-cake", question: "question", basket: "basket" };
 
 const enquiryOptions: { value: Enquiry; label: string }[] = [
   { value: "basket", label: "A pre-order from my basket" },
@@ -61,7 +64,7 @@ type Outcome =
 export function OrderForm() {
   const ref = useRef<HTMLElement>(null);
   const { lines, setQty, clear } = useCart();
-  const [enquiry, setEnquiry] = useState<Enquiry>("custom-cake");
+  const [enquiry, setEnquiry] = useState<Enquiry>("basket");
   const touchedEnquiry = useRef(false);
   const [cake, setCake] = useState("");
   const [occasion, setOccasion] = useState("");
@@ -75,10 +78,11 @@ export function OrderForm() {
   const [consentPulse, setConsentPulse] = useState(0);
   const consentRef = useRef<HTMLInputElement>(null);
 
-  // A visitor arriving from the basket is sending a pre-order, unless they already chose otherwise.
+  // A link can ask for a cake request or a question (static export: read in the browser).
   useEffect(() => {
-    if (!touchedEnquiry.current && lines.length) setEnquiry("basket");
-  }, [lines.length]);
+    const wanted = fromUrl[new URLSearchParams(window.location.search).get("for") ?? ""];
+    if (wanted && !touchedEnquiry.current) setEnquiry(wanted);
+  }, []);
 
   useMotion(ref, (el) => {
     const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top 80%", once: true } });
@@ -126,7 +130,7 @@ export function OrderForm() {
     const text = (name: string) => String(form.get(name) ?? "").trim();
     const point = pickupPoints.find((p) => p.value === pickup);
     const payload: OrderPayload = {
-      kind: enquiry === "basket" ? "basket" : "custom-cake",
+      kind: enquiry,
       customer: text("name"),
       phone: text("phone"),
       email: text("email"),
@@ -134,7 +138,7 @@ export function OrderForm() {
       pickup_point: enquiry === "question" ? "" : (point?.label ?? ""),
       pickup_date: enquiry === "question" ? null : date || null,
       occasion: enquiry === "custom-cake" ? occasion : "",
-      notes: [enquiry === "question" ? "Question from the website." : "", enquiry === "custom-cake" && cake ? `Cake: ${cake}` : "", text("message")]
+      notes: [enquiry === "custom-cake" && cake ? `Cake: ${cake}` : "", text("message")]
         .filter(Boolean)
         .join("\n"),
       items:
@@ -173,7 +177,7 @@ export function OrderForm() {
   return (
     <section ref={ref} id="order" aria-labelledby="order-title" className="container-site scroll-mt-28 pt-14 sm:pt-20">
       <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-10">
-        <div className="rounded-3xl bg-oat p-5 sm:p-8 lg:p-10">
+        <div className="min-w-0 rounded-3xl bg-oat p-5 sm:p-8 lg:p-10">
           <h2
             id="order-title"
             data-form-head
@@ -234,13 +238,8 @@ export function OrderForm() {
               </div>
 
               {enquiry === "basket" && (
-                <div data-field className="rounded-2xl bg-white p-3 sm:col-span-2 sm:p-4">
-                  <p className="flex items-center justify-between px-1 pb-2 text-[15px] font-semibold text-ink">
-                    Your basket
-                    <Link href="/menu" className="text-sm font-medium text-caramel-dark underline-offset-4 hover:underline">
-                      Add more
-                    </Link>
-                  </p>
+                <div data-field className="min-w-0 rounded-2xl bg-white p-3 sm:col-span-2 sm:p-4">
+                  <p className="px-1 pb-2 text-[15px] font-semibold text-ink">Your basket</p>
                   {lines.length ? (
                     <ul className="divide-y divide-oat-line">
                       {lines.map(({ product, qty }) => (
@@ -277,9 +276,12 @@ export function OrderForm() {
                     </ul>
                   ) : (
                     <p className={`rounded-xl px-3 py-4 text-sm ${basketError ? "bg-latte-soft text-caramel-dark" : "bg-oat text-muted"}`} role={basketError ? "alert" : undefined}>
-                      Your basket is empty. <Link href="/menu" className="font-semibold text-brand underline underline-offset-4">Pick from the menu</Link>, or choose a celebration cake above.
+                      {basketError
+                        ? "Add at least one treat from the menu below, or choose a celebration cake above."
+                        : "Nothing in it yet. Add treats from the menu below."}
                     </p>
                   )}
+                  <MenuPicker />
                 </div>
               )}
 
@@ -348,6 +350,7 @@ export function OrderForm() {
                 <span className="mb-2 block text-sm font-medium text-ink">{isQuestion ? "Your question" : "Anything we should know?"}</span>
                 <textarea
                   name="message"
+                  required={isQuestion}
                   rows={4}
                   maxLength={2000}
                   placeholder={

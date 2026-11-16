@@ -442,18 +442,18 @@ export function Header() {
                   </p>
                   <ButtonLink
                     data-panel-item
-                    href="/contact#order"
-                    onClick={onNavClick("/contact#order")}
+                    href="/order#order"
+                    onClick={onNavClick("/order#order")}
                     className="mt-3 w-full"
                   >
-                    {lines.length ? "Send pre-order" : "Browse the menu"}
+                    {lines.length ? "Send pre-order" : "Choose your treats"}
                   </ButtonLink>
                 </div>
               )}
             </div>
 
             <span data-intro data-h-action className="hidden sm:block">
-              <ButtonLink href="/menu" size="sm" onClick={onNavClick("/menu")} className="ml-2">
+              <ButtonLink href="/order" size="sm" onClick={onNavClick("/order")} className="ml-2">
                 Pre-order
               </ButtonLink>
             </span>
@@ -549,7 +549,7 @@ export function Header() {
               </ul>
             </div>
             <div data-drawer-item className="mt-auto space-y-3 pt-8">
-              <ButtonLink href="/menu" onClick={onNavClick("/menu")} className="w-full">
+              <ButtonLink href="/order" onClick={onNavClick("/order")} className="w-full">
                 Pre-order
               </ButtonLink>
               <ButtonLink href={site.messengerUrl} variant="outline" className="w-full">

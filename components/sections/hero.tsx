@@ -118,7 +118,7 @@ export function Hero() {
           </span>
           <span data-intro data-hero-fade>
             <ButtonLink
-              href="/contact#order"
+              href="/order?for=cake#order"
               variant="outline"
               fluid
               className="w-full sm:min-h-13 sm:px-9 sm:text-base"

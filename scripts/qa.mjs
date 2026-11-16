@@ -22,7 +22,7 @@
  *     doesn't at rest, the page gains no horizontal overflow and the layout
  *     doesn't jump; with real scrollbars, the drawer's scroll lock doesn't
  *     shift the page and the page scrollbar is the thin custom one
- *   - the contact date picker: focus moves to a day, full-date labels,
+ *   - the order form date picker: focus moves to a day, full-date labels,
  *     arrow/PageUp/PageDown/Home/End keys, Enter picks and returns focus,
  *     Escape and an outside click close it (at 1440 and 390)
  *
@@ -340,9 +340,9 @@ for (const width of [1440, 390]) {
     if (await page.locator("#mobile-drawer").count()) fail("/ mobile drawer did not close on Escape");
 
     /* The date picker on a phone: same keyboard contract, opens without a flash. */
-    await page.goto(base + "/contact/", { waitUntil: "networkidle" });
+    await page.goto(base + "/order/", { waitUntil: "networkidle" });
     await settle(page);
-    await datePickerChecks(page, "/contact/ @390");
+    await datePickerChecks(page, "/order/ @390");
   } else {
     /* Header panels: Menu mega dropdown and basket (with items in it). */
     await page.goto(base + "/", { waitUntil: "networkidle" });
@@ -370,26 +370,36 @@ for (const width of [1440, 390]) {
     await page.waitForTimeout(600);
     await aiTells(page, "/menu/ sorted");
 
-    /* Contact: the custom-cake form, its consent error and its sent state. */
-    await page.goto(base + "/contact/", { waitUntil: "networkidle" });
+    /* Order: the menu picker, the form's consent error and its sent state. */
+    // Start from an empty basket (the header checks above filled it), so the picker opens.
+    await page.evaluate(() => window.localStorage.removeItem("kin-kitchen-basket"));
+    await page.goto(base + "/order/", { waitUntil: "networkidle" });
     await settle(page);
-    await datePickerChecks(page, "/contact/");
+    await datePickerChecks(page, "/order/");
     await page.getByLabel("Full name").fill("Jane Baker");
     await page.getByLabel("Mobile number").fill("0917 123 4567");
+    // An empty basket blocks a pre-order; adding from the picker unblocks it and shows a stepper.
+    await page.getByRole("button", { name: /^Send order$/ }).click();
+    await page.waitForTimeout(300);
+    if (!(await page.getByRole("alert").filter({ hasText: /at least one treat/i }).count())) fail("/order/ empty basket was not flagged");
+    await page.getByRole("button", { name: /^Add .* to your order$/ }).first().click();
+    await page.waitForTimeout(300);
+    if (!(await page.getByRole("button", { name: /^Add one more / }).count())) fail("/order/ menu picker did not add to the basket");
+    await aiTells(page, "/order/ menu picker");
     await page.getByRole("button", { name: /^Send (order|message)$/ }).click();
     await page.waitForTimeout(400);
-    if (!(await page.getByRole("alert").filter({ hasText: /tick the box/i }).count())) fail("/contact/ consent error not shown");
+    if (!(await page.getByRole("alert").filter({ hasText: /tick the box/i }).count())) fail("/order/ consent error not shown");
     if (!(await page.evaluate(() => document.activeElement?.getAttribute("name") === "consent")))
-      fail("/contact/ a blocked submit did not move focus to the consent box");
-    if (await page.getByRole("status").filter({ hasText: /thank you/i }).count()) fail("/contact/ form sent without consent");
-    await aiTells(page, "/contact/ form error");
+      fail("/order/ a blocked submit did not move focus to the consent box");
+    if (await page.getByRole("status").filter({ hasText: /thank you/i }).count()) fail("/order/ form sent without consent");
+    await aiTells(page, "/order/ form error");
     await page.keyboard.press("Space");
-    if (!(await page.locator('input[name="consent"]').isChecked())) fail("/contact/ Space did not tick the consent box");
-    if (await page.getByRole("alert").filter({ hasText: /tick the box/i }).count()) fail("/contact/ consent error stayed after ticking");
+    if (!(await page.locator('input[name="consent"]').isChecked())) fail("/order/ Space did not tick the consent box");
+    if (await page.getByRole("alert").filter({ hasText: /tick the box/i }).count()) fail("/order/ consent error stayed after ticking");
     await page.getByRole("button", { name: /^Send (order|message)$/ }).click();
     await page.waitForTimeout(900);
-    if (!(await page.getByRole("status").filter({ hasText: /thank you/i }).count())) fail("/contact/ form did not reach its sent state");
-    await aiTells(page, "/contact/ sent state");
+    if (!(await page.getByRole("status").filter({ hasText: /thank you/i }).count())) fail("/order/ form did not reach its sent state");
+    await aiTells(page, "/order/ sent state");
   }
   await context.close();
 }

@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Next.js 16 App Router, Tailwind 4 and GSAP, exported as a static site for a bucket host (Cloudflare). Orders leave the browser through two public, write-only endpoints: the Kin Kitchen CRM's Supabase RPC `submit_web_order`, and Web3Forms for an email to the owner.
+Next.js 16 App Router, Tailwind 4 and GSAP, exported as a static site for a bucket host (Cloudflare). Orders leave the browser through one public, write-only endpoint: the Kin Kitchen CRM's Supabase RPC `submit_web_order`. Saving an order emails the owner from Supabase through Brevo; no email key reaches the browser.
 
 ## Users
 
@@ -16,7 +16,7 @@ Customers of Kin Kitchen in Quezon City and San Jose del Monte, mostly on phones
 
 ## Product Purpose
 
-The public website for Kin Kitchen, a home dessert kitchen run by sisters ("Sisterhood · Desserts · Est. 2026"). Visitors browse the menu, fill a basket and send a pre-order, or request a celebration cake. Every order lands in the owner's email and in the CRM's "From the website" inbox, and the owner confirms the price, date and pick-up spot by message.
+The public website for Kin Kitchen, a home dessert kitchen run by sisters ("Sisterhood · Desserts · Est. 2026"). Visitors browse the menu, fill a basket and send a pre-order, or request a celebration cake. Every order lands in the owner's email and on the CRM's Inquiries page, and the owner confirms the price, date and pick-up spot by message.
 
 Success: a visitor knows what Kin Kitchen bakes, how pre-orders and pick-up work, and sends an order in a few taps.
 

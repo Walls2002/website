@@ -29,7 +29,7 @@ export default function MenuPage() {
       <Cta
         title={["Planning a", "celebration?"]}
         text="Icing and fondant cakes, message brownies and cupcakes, made for your date."
-        cta={{ label: "Plan a cake", href: "/contact#order" }}
+        cta={{ label: "Plan a cake", href: "/order?for=cake#order" }}
         className="py-14 sm:py-20"
       />
     </>

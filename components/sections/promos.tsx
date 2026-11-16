@@ -85,7 +85,7 @@ export function Promos() {
             Piped on top, made to order
           </p>
           <span data-promo-text className="mt-5 sm:mt-7">
-            <ButtonLink href="/contact#order" variant="caramel" size="sm">
+            <ButtonLink href="/order?for=cake#order" variant="caramel" size="sm">
               Plan a cake
             </ButtonLink>
           </span>
