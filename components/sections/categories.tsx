@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { ButtonLink } from "@/components/ui/button";
-import { categories } from "@/lib/data";
+import { categories, categoryImage } from "@/lib/data";
 import { gsap, useMotion } from "@/lib/gsap";
 
 export function Categories() {
@@ -59,7 +59,7 @@ export function Categories() {
             Pick your kind of sweet
           </h2>
           <p data-cat-text className="mt-3 max-w-sm text-[15px] leading-relaxed text-muted sm:text-base">
-            Banana loaves for merienda, brownies to share around, and cakes for the days that need one.
+            Brownies to share around, banana bakes for merienda, and warm bread and rolls.
           </p>
           <ul className="mt-7 grid grid-cols-3 gap-3 sm:gap-4 md:max-w-md lg:max-w-none lg:grid-cols-5 lg:gap-3">
             {categories.map((c) => (
@@ -70,7 +70,7 @@ export function Categories() {
                   className="flex aspect-square flex-col items-center justify-center gap-2 rounded-2xl bg-latte-soft p-2 text-center transition-colors hover:bg-latte sm:aspect-[1.1]"
                 >
                   <Image
-                    src={`/images/categories/${c.slug}.webp`}
+                    src={categoryImage(c)}
                     alt=""
                     width={64}
                     height={64}

@@ -43,17 +43,17 @@ export function Promos() {
         </div>
         <div className="flex max-w-[60%] flex-col justify-center p-6 sm:max-w-[52%] sm:p-10 lg:max-w-[64%] lg:p-8 xl:max-w-[52%] xl:p-10">
           <h2 data-promo-text className="font-serif text-[clamp(1.9rem,1.5rem+1.4vw,2.75rem)] leading-[1.08]">
-            Banana loaves
+            Banana bakes
           </h2>
           <p data-promo-text className="mt-2 text-base font-medium text-latte sm:text-lg">
-            Streusel or choco chip
+            Streusel or overload
           </p>
           <p data-promo-text className="mt-3 hidden text-sm leading-relaxed text-white/85 sm:block lg:hidden xl:block">
-            Our pre-order regulars, baked in their own tins and boxed for merienda.
+            Our pre-order regulars, baked in their own tins for merienda.
           </p>
           <span data-promo-text className="mt-5 sm:mt-6">
             <ButtonLink href="/menu?category=loaves" variant="white" size="sm">
-              See the loaves
+              See banana bakes
             </ButtonLink>
           </span>
         </div>

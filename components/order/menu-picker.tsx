@@ -3,20 +3,18 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { useCart } from "@/components/cart/cart-context";
-import { ChevronIcon, MinusIcon, PlusIcon } from "@/components/icons";
-import { categories, products, type CategorySlug } from "@/lib/data";
+import { ChevronIcon } from "@/components/icons";
+import { ProductOptions } from "@/components/product-options";
+import { categories, categoryImage, products, type CategorySlug } from "@/lib/data";
 import { gsap, useGSAP } from "@/lib/gsap";
 
 type Filter = CategorySlug | "all";
 
 const menu = [...products].sort((a, b) => a.order - b.order);
-const categoryLabel = new Map(categories.map((c) => [c.slug, c.label]));
 const chips: { value: Filter; label: string; icon?: string }[] = [
   { value: "all", label: "All treats" },
-  ...categories.map((c) => ({ value: c.slug, label: c.label, icon: c.slug })),
+  ...categories.map((c) => ({ value: c.slug, label: c.label, icon: categoryImage(c) })),
 ];
-
-const stepBtn = "grid size-8 place-items-center rounded-full text-ink transition-colors hover:bg-oat";
 
 /**
  * The menu, inside the order form: pick treats straight into the basket without
@@ -26,8 +24,7 @@ const stepBtn = "grid size-8 place-items-center rounded-full text-ink transition
  * a long scroll of treats before the name fields.
  */
 export function MenuPicker() {
-  const { lines, add, setQty } = useCart();
-  const qtyOf = new Map(lines.map((l) => [l.product.slug, l.qty]));
+  const { lines } = useCart();
   const [filter, setFilter] = useState<Filter>("all");
   const [chosen, setChosen] = useState<boolean | null>(null);
   const open = chosen ?? lines.length === 0;
@@ -99,7 +96,7 @@ export function MenuPicker() {
                     >
                       {c.icon && (
                         <Image
-                          src={`/images/categories/${c.icon}.webp`}
+                          src={c.icon}
                           alt=""
                           width={24}
                           height={24}
@@ -115,52 +112,22 @@ export function MenuPicker() {
           </div>
 
           <ul aria-label="Treats on the menu" className="mt-3 grid gap-2 md:grid-cols-2 lg:grid-cols-1">
-            {visible.map((p) => {
-              const qty = qtyOf.get(p.slug) ?? 0;
-              return (
-                <li key={p.slug} data-pick-row className="flex items-center gap-3 rounded-xl bg-oat p-2 pr-2.5">
-                  <Image
-                    src={`/images/products/${p.slug}.webp`}
-                    alt=""
-                    width={56}
-                    height={56}
-                    className="size-14 shrink-0 rounded-lg bg-cream object-cover"
-                  />
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-sm leading-snug font-medium text-ink">{p.name}</span>
-                    <span className="mt-0.5 block text-[13px] font-medium text-caramel-dark">
-                      {categoryLabel.get(p.category)}
-                    </span>
-                  </span>
-                  {qty ? (
-                    <span data-allow-number className="flex shrink-0 items-center gap-1 rounded-full border border-oat-line bg-white p-0.5">
-                      <button type="button" aria-label={`Remove one ${p.name}`} onClick={() => setQty(p.slug, qty - 1)} className={stepBtn}>
-                        <MinusIcon className="size-3.5" />
-                      </button>
-                      <span className="w-5 text-center text-sm font-medium" aria-live="polite">
-                        {qty}
-                      </span>
-                      <button type="button" aria-label={`Add one more ${p.name}`} onClick={() => setQty(p.slug, qty + 1)} className={stepBtn}>
-                        <PlusIcon className="size-3.5" />
-                      </button>
-                    </span>
-                  ) : (
-                    <button
-                      type="button"
-                      aria-label={`Add ${p.name} to your order`}
-                      onClick={() => {
-                        // Keep the menu open while they shop; it only folds when they say so.
-                        setChosen(true);
-                        add(p.slug);
-                      }}
-                      className="grid size-10 shrink-0 place-items-center rounded-full bg-brand text-white transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-                    >
-                      <PlusIcon className="size-4" />
-                    </button>
-                  )}
-                </li>
-              );
-            })}
+            {visible.map((p) => (
+              <li key={p.slug} data-pick-row className="flex items-start gap-3 rounded-xl bg-oat p-2.5 sm:gap-4 sm:p-3">
+                <Image
+                  src={`/images/products/${p.slug}.webp`}
+                  alt=""
+                  width={72}
+                  height={72}
+                  className="size-16 shrink-0 rounded-lg bg-cream object-cover sm:size-[72px]"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="pt-0.5 text-sm leading-snug font-medium text-ink sm:text-[15px]">{p.name}</p>
+                  {/* Keep the menu open while they shop; it only folds when they say so. */}
+                  <ProductOptions product={p} className="mt-2" surface="oat" onAdd={() => setChosen(true)} />
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

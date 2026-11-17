@@ -2,14 +2,14 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { useCart } from "@/components/cart/cart-context";
+import { flavourText, lineDetail, useCart } from "@/components/cart/cart-context";
 import { MinusIcon, PlusIcon } from "@/components/icons";
 import { MenuPicker } from "@/components/order/menu-picker";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Select } from "@/components/ui/select";
-import { categories, consentCopy } from "@/lib/data";
+import { categories, consentCopy, itemName, peso } from "@/lib/data";
 import { gsap, useGSAP, useMotion } from "@/lib/gsap";
 import { mailtoHref, sendOrder, type OrderKind, type OrderPayload } from "@/lib/send-order";
 import { pickupPoints, site } from "@/lib/site";
@@ -63,7 +63,7 @@ type Outcome =
 
 export function OrderForm() {
   const ref = useRef<HTMLElement>(null);
-  const { lines, setQty, clear } = useCart();
+  const { lines, total, setQty, clear } = useCart();
   const [enquiry, setEnquiry] = useState<Enquiry>("basket");
   const touchedEnquiry = useRef(false);
   const [cake, setCake] = useState("");
@@ -149,16 +149,23 @@ export function OrderForm() {
       pickup_point: enquiry === "question" ? "" : (point?.label ?? ""),
       pickup_date: enquiry === "question" ? null : date || null,
       occasion: enquiry === "custom-cake" ? occasion : "",
-      notes: [enquiry === "custom-cake" && cake ? `Cake: ${cake}` : "", text("message")]
+      notes: [
+        enquiry === "custom-cake" && cake ? `Cake: ${cake}` : "",
+        text("message"),
+        enquiry === "basket" && lines.length ? `Basket total at menu prices: ${peso(total)}` : "",
+      ]
         .filter(Boolean)
         .join("\n"),
       items:
         enquiry === "basket"
-          ? lines.map(({ product, qty }) => ({
-              name: product.name,
+          ? lines.map(({ product, option, flavour, qty }) => ({
+              name: itemName(product, option),
               category: categoryLabel.get(product.category) ?? product.category,
               qty,
-              note: null,
+              // The size travels in the name when there's a choice of sizes; otherwise it's noted here.
+              note: [product.options.length > 1 ? "" : option.label, flavourText(product, flavour), `${peso(option.price)} each`]
+                .filter(Boolean)
+                .join(" · "),
             }))
           : [],
     };
@@ -197,7 +204,7 @@ export function OrderForm() {
             Send your order
           </h2>
           <p data-form-head className="mt-3 max-w-[38rem] text-[15px] leading-relaxed text-muted">
-            We bake in batches and confirm every order by message, with the price and the pick-up details.
+            We bake in batches and confirm every order by message, with the pick-up details.
           </p>
 
           {outcome.state === "sent" ? (
@@ -208,7 +215,9 @@ export function OrderForm() {
               <p data-sent-text className="mx-auto mt-2 max-w-[28rem] text-[15px] text-muted">
                 {outcome.kind === "question"
                   ? "We'll reply as soon as we're out of the kitchen."
-                  : "We'll message you to confirm the price, the date and where to pick up."}
+                  : outcome.kind === "custom-cake"
+                    ? "We'll message you to confirm the price, the date and where to pick up."
+                    : "We'll message you to confirm the date and where to pick up."}
               </p>
               <span data-sent-text className="mt-6 inline-block">
                 <Button variant="outline" onClick={reset}>
@@ -252,39 +261,55 @@ export function OrderForm() {
                 <div data-field className="min-w-0 rounded-2xl bg-white p-3 sm:col-span-2 sm:p-4">
                   <p className="px-1 pb-2 text-[15px] font-semibold text-ink">Your basket</p>
                   {lines.length ? (
-                    <ul className="divide-y divide-oat-line">
-                      {lines.map(({ product, qty }) => (
-                        <li key={product.slug} className="flex items-center gap-3 py-2">
-                          <Image
-                            src={`/images/products/${product.slug}.webp`}
-                            alt=""
-                            width={48}
-                            height={48}
-                            className="size-12 rounded-lg bg-cream object-cover"
-                          />
-                          <span className="min-w-0 flex-1 text-sm font-medium text-ink">{product.name}</span>
-                          <span data-allow-number className="flex items-center gap-1 rounded-full border border-oat-line p-0.5">
-                            <button
-                              type="button"
-                              aria-label={`Remove one ${product.name}`}
-                              onClick={() => setQty(product.slug, qty - 1)}
-                              className="grid size-8 place-items-center rounded-full text-ink hover:bg-oat"
-                            >
-                              <MinusIcon className="size-3.5" />
-                            </button>
-                            <span className="w-5 text-center text-sm font-medium">{qty}</span>
-                            <button
-                              type="button"
-                              aria-label={`Add one ${product.name}`}
-                              onClick={() => setQty(product.slug, qty + 1)}
-                              className="grid size-8 place-items-center rounded-full text-ink hover:bg-oat"
-                            >
-                              <PlusIcon className="size-3.5" />
-                            </button>
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+                    <>
+                      <ul className="divide-y divide-oat-line">
+                        {lines.map((line) => {
+                          const { key, product, qty } = line;
+                          const what = `${product.name}, ${lineDetail(line)}`;
+                          return (
+                            <li key={key} className="flex items-center gap-3 py-2">
+                              <Image
+                                src={`/images/products/${product.slug}.webp`}
+                                alt=""
+                                width={48}
+                                height={48}
+                                className="size-12 shrink-0 rounded-lg bg-cream object-cover"
+                              />
+                              <span className="min-w-0 flex-1">
+                                <span className="block text-sm leading-snug font-medium text-ink">{product.name}</span>
+                                <span className="block text-[13px] leading-snug text-muted">{lineDetail(line)}</span>
+                              </span>
+                              <span className="flex shrink-0 flex-col items-end gap-1 sm:flex-row-reverse sm:items-center sm:gap-4">
+                                <span className="text-sm font-semibold text-ink tabular-nums">{peso(line.total)}</span>
+                                <span data-allow-number className="flex items-center gap-1 rounded-full border border-oat-line p-0.5">
+                                  <button
+                                    type="button"
+                                    aria-label={`Remove one ${what}`}
+                                    onClick={() => setQty(key, qty - 1)}
+                                    className="grid size-8 place-items-center rounded-full text-ink hover:bg-oat"
+                                  >
+                                    <MinusIcon className="size-3.5" />
+                                  </button>
+                                  <span className="w-5 text-center text-sm font-medium">{qty}</span>
+                                  <button
+                                    type="button"
+                                    aria-label={`Add one ${what}`}
+                                    onClick={() => setQty(key, qty + 1)}
+                                    className="grid size-8 place-items-center rounded-full text-ink hover:bg-oat"
+                                  >
+                                    <PlusIcon className="size-3.5" />
+                                  </button>
+                                </span>
+                              </span>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                      <p className="flex items-baseline justify-between gap-4 border-t border-oat-line px-1 pt-3 pb-1">
+                        <span className="text-sm font-medium text-ink">Total</span>
+                        <span className="text-base font-semibold text-ink tabular-nums">{peso(total)}</span>
+                      </p>
+                    </>
                   ) : (
                     <p className={`rounded-xl px-3 py-4 text-sm ${basketError ? "bg-latte-soft text-caramel-dark" : "bg-oat text-muted"}`} role={basketError ? "alert" : undefined}>
                       {basketError
@@ -369,7 +394,7 @@ export function OrderForm() {
                       ? "The message on the cake, colours, a photo you'll send on Messenger…"
                       : isQuestion
                         ? "Ask away"
-                        : "Drizzle choice, who's picking up, allergies…"
+                        : "Who's picking up, allergies…"
                   }
                   className={`${inputCls} resize-y py-3`}
                 />
@@ -414,12 +439,16 @@ export function OrderForm() {
           )}
         </div>
 
-        <div data-form-art className="relative hidden aspect-[4/5] overflow-hidden rounded-3xl lg:block lg:aspect-auto">
+        {/* A fixed-shape photo that stays beside the long form; stretched to the form's height it got cropped and blown up. */}
+        <div
+          data-form-art
+          className="relative hidden aspect-[4/5] overflow-hidden rounded-3xl lg:sticky lg:top-28 lg:block lg:self-start"
+        >
           <Image
             src="/images/okasan-cake.webp"
             alt="White birthday cake piped with lilac and lettered Happy birthday Okasan"
             fill
-            sizes="(min-width: 1024px) 32vw, 0px"
+            sizes="(min-width: 1280px) 520px, (min-width: 1024px) 40vw, 0px"
             className="object-cover"
           />
           <div className="absolute inset-x-4 bottom-4 rounded-2xl bg-white p-5">

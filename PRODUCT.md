@@ -33,7 +33,7 @@ Baked to order in batches with a set pick-up date, by sisters, with the customer
 
 ## Capabilities and Constraints
 
-- Prices are deliberately hidden on the site (owner's choice); quoted on confirmation.
+- Menu prices are shown, from the owner's November 2026 menu flyer (`lib/data.ts`); each size is its own price and the basket shows a total. Celebration cakes have no listed price; they are quoted on confirmation.
 - No opening hours (owner's choice); no delivery offered on the site.
 - The basket persists in the browser only; the order record lives in the CRM.
 - If the order endpoints are not configured, the form hands the customer a prefilled email instead of pretending to send.

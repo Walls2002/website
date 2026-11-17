@@ -6,23 +6,25 @@ import { Flip } from "gsap/Flip";
 import { useMemo, useRef, useState } from "react";
 import { ProductCard } from "@/components/product-card";
 import { Select } from "@/components/ui/select";
-import { categories, products, type CategorySlug } from "@/lib/data";
+import { categories, categoryImage, fromPrice, products, type CategorySlug } from "@/lib/data";
 import { gsap, useGSAP, useMotion } from "@/lib/gsap";
 
 gsap.registerPlugin(Flip);
 
 type Filter = CategorySlug | "all";
-type Sort = "picks" | "favourites" | "name";
+type Sort = "picks" | "favourites" | "price" | "name";
 
 const sortOptions = [
   { value: "picks", label: "Our picks" },
   { value: "favourites", label: "Favourites first" },
+  { value: "price", label: "Price: low to high" },
   { value: "name", label: "Name: A to Z" },
 ];
 
 const sorters: Record<Sort, (a: (typeof products)[number], b: (typeof products)[number]) => number> = {
   picks: (a, b) => a.order - b.order,
   favourites: (a, b) => Number(Boolean(b.favourite)) - Number(Boolean(a.favourite)) || a.order - b.order,
+  price: (a, b) => fromPrice(a) - fromPrice(b) || a.order - b.order,
   name: (a, b) => a.name.localeCompare(b.name),
 };
 
@@ -119,7 +121,7 @@ export function MenuBrowser({ initialCategory }: { initialCategory: Filter }) {
 
   const chips: { value: Filter; label: string; icon?: string }[] = [
     { value: "all", label: "All treats" },
-    ...categories.map((c) => ({ value: c.slug, label: c.label, icon: c.slug })),
+    ...categories.map((c) => ({ value: c.slug, label: c.label, icon: categoryImage(c) })),
   ];
 
   return (
@@ -158,7 +160,7 @@ export function MenuBrowser({ initialCategory }: { initialCategory: Filter }) {
                   }`}
                 >
                   {c.icon && (
-                    <Image src={`/images/categories/${c.icon}.webp`} alt="" width={28} height={28} className="size-7 rounded-full object-cover" />
+                    <Image src={c.icon} alt="" width={28} height={28} className="size-7 rounded-full object-cover" />
                   )}
                   {c.label}
                 </button>

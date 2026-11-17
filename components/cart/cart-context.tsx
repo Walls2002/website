@@ -1,16 +1,27 @@
 "use client";
 
 import { createContext, useCallback, useContext, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
-import { productBySlug, type Product } from "@/lib/data";
+import { productBySlug, type Flavour, type Product, type ProductOption } from "@/lib/data";
 
-type Line = { product: Product; qty: number };
+/** One basket line: a product in one size (and flavour, where it has them). */
+export type Line = {
+  key: string;
+  product: Product;
+  option: ProductOption;
+  flavour: Flavour | null;
+  qty: number;
+  /** qty × the option's price. */
+  total: number;
+};
 type Items = Record<string, number>;
 
 type CartValue = {
   lines: Line[];
   count: number;
-  add: (slug: string) => void;
-  setQty: (slug: string, qty: number) => void;
+  /** Sum of every line at menu prices. */
+  total: number;
+  add: (key: string) => void;
+  setQty: (key: string, qty: number) => void;
   clear: () => void;
   /** Bumps on every add so the header can play its "added" animation. */
   pulse: number;
@@ -18,13 +29,29 @@ type CartValue = {
 
 const CartContext = createContext<CartValue | null>(null);
 
+/** "fudgy-brownies~box-6" or "cinnamon-rolls~pair~vanilla". */
+export const lineKey = (slug: string, optionId: string, flavourId?: string | null) =>
+  [slug, optionId, flavourId].filter(Boolean).join("~");
+
+/** Resolves a stored key against today's menu; anything no longer on it is dropped. */
+function resolve(key: string) {
+  const [slug, optionId, flavourId] = key.split("~");
+  const product = productBySlug.get(slug);
+  const option = product?.options.find((o) => o.id === optionId);
+  if (!product || !option) return null;
+  const flavour = product.flavours ? (product.flavours.choices.find((f) => f.id === flavourId) ?? null) : null;
+  // A product with flavours needs one; one without must not carry one.
+  if (Boolean(product.flavours) !== Boolean(flavour)) return null;
+  return { product, option, flavour };
+}
+
 /*
  * The basket lives in a small external store backed by localStorage, so it
  * survives a reload and stays in step across tabs. It is a convenience in this
  * browser only, never the order record. The server (and hydration) always see
  * an empty basket; the stored one takes over right after.
  */
-const STORAGE_KEY = "kin-kitchen-basket";
+const STORAGE_KEY = "kin-kitchen-basket-2";
 const EMPTY: Items = {};
 let cache: Items | null = null;
 const listeners = new Set<() => void>();
@@ -37,7 +64,7 @@ function readStored(): Items {
     return Object.fromEntries(
       Object.entries(parsed).filter(
         (entry): entry is [string, number] =>
-          productBySlug.has(entry[0]) && Number.isInteger(entry[1]) && (entry[1] as number) > 0 && (entry[1] as number) < 100,
+          resolve(entry[0]) !== null && Number.isInteger(entry[1]) && (entry[1] as number) > 0 && (entry[1] as number) < 100,
       ),
     );
   } catch {
@@ -76,16 +103,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const items = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const [pulse, setPulse] = useState(0);
 
-  const add = useCallback((slug: string) => {
-    write((prev) => ({ ...prev, [slug]: Math.min(99, (prev[slug] ?? 0) + 1) }));
+  const add = useCallback((key: string) => {
+    if (!resolve(key)) return;
+    write((prev) => ({ ...prev, [key]: Math.min(99, (prev[key] ?? 0) + 1) }));
     setPulse((n) => n + 1);
   }, []);
 
-  const setQty = useCallback((slug: string, qty: number) => {
+  const setQty = useCallback((key: string, qty: number) => {
     write((prev) => {
       const next = { ...prev };
-      if (qty <= 0) delete next[slug];
-      else next[slug] = Math.min(99, qty);
+      if (qty <= 0) delete next[key];
+      else next[key] = Math.min(99, qty);
       return next;
     });
   }, []);
@@ -93,13 +121,21 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const clear = useCallback(() => write(() => ({})), []);
 
   const value = useMemo(() => {
-    const lines = Object.entries(items).flatMap(([slug, qty]) => {
-      const product = productBySlug.get(slug);
-      return product ? [{ product, qty }] : [];
+    const lines: Line[] = Object.entries(items).flatMap(([key, qty]) => {
+      const hit = resolve(key);
+      return hit ? [{ key, ...hit, qty, total: hit.option.price * qty }] : [];
     });
+    // Menu order, then size order, so the basket reads like the menu.
+    lines.sort(
+      (a, b) =>
+        a.product.order - b.product.order ||
+        a.product.options.indexOf(a.option) - b.product.options.indexOf(b.option) ||
+        a.key.localeCompare(b.key),
+    );
     return {
       lines,
       count: lines.reduce((n, l) => n + l.qty, 0),
+      total: lines.reduce((n, l) => n + l.total, 0),
       add,
       setQty,
       clear,
@@ -115,3 +151,10 @@ export function useCart() {
   if (!ctx) throw new Error("useCart must be used inside <CartProvider>");
   return ctx;
 }
+
+/** "Vanilla glaze" */
+export const flavourText = (p: Product, f: Flavour | null) => (f && p.flavours ? `${f.label} ${p.flavours.name.toLowerCase()}` : "");
+
+/** "2 pieces · Vanilla glaze": what sets a line apart from the product name. */
+export const lineDetail = (l: Pick<Line, "product" | "option" | "flavour">) =>
+  [l.option.label, flavourText(l.product, l.flavour)].filter(Boolean).join(" · ");

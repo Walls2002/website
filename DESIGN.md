@@ -256,7 +256,7 @@ Soft, confident pills.
 - **Focus:** 2px chocolate outline at 2px offset. Colour transitions 200ms.
 
 ### Cards / Containers
-- **Product card:** white, 16px radius, oat-line border, 10px padding, square image well (12px radius, crumb placeholder) that zooms to 105% on hover over 500ms; name in Montserrat 500, category in toffee deep, a round chocolate add-to-basket disc (40 to 44px) that spins in on tap.
+- **Product card:** white, 16px radius, oat-line border, 10px padding, square image well (12px radius, crumb placeholder) that zooms to 105% on hover over 500ms; name in Montserrat 500, then the sizes as a price list at the foot of the card, like the menu flyer: label, a dashed oat-line leader, the price in semibold tabular figures and a small chocolate add disc (20 to 24px) that spins in on tap and turns toffee with the count once that size is in the basket; a box's saving sits under its label in toffee deep. Flavours (the cinnamon roll glaze) are pill radios above the list. One component (`ProductOptions`) serves the card and the order form's menu picker.
 - **Oat panel:** 24px radius, oat panel fill, no border, no shadow.
 - **Promo card:** 24px radius, chocolate or butter ground with the photo bleeding off the right edge under a gradient from the ground colour.
 - **Popovers:** white, 16px radius, oat-line border, popover shadow.

@@ -14,6 +14,16 @@
     "h": 1919,
     "v": "3b5b6bda"
   },
+  "/images/categories/breads.webp": {
+    "w": 192,
+    "h": 192,
+    "v": "0ee2cfd2"
+  },
+  "/images/categories/brownies-2.webp": {
+    "w": 192,
+    "h": 192,
+    "v": "2cd179bf"
+  },
   "/images/categories/brownies.webp": {
     "w": 192,
     "h": 192,
@@ -29,10 +39,20 @@
     "h": 192,
     "v": "8213836a"
   },
+  "/images/categories/loaves-2.webp": {
+    "w": 192,
+    "h": 192,
+    "v": "d1e57ba5"
+  },
   "/images/categories/loaves.webp": {
     "w": 192,
     "h": 192,
     "v": "c8c0d36b"
+  },
+  "/images/categories/treats-2.webp": {
+    "w": 192,
+    "h": 192,
+    "v": "eba1558f"
   },
   "/images/categories/treats.webp": {
     "w": 192,
@@ -104,10 +124,25 @@
     "h": 1000,
     "v": "8ea8146c"
   },
+  "/images/products/banana-cinnamon-streusel.webp": {
+    "w": 640,
+    "h": 640,
+    "v": "312cf036"
+  },
+  "/images/products/banana-muffins.webp": {
+    "w": 640,
+    "h": 640,
+    "v": "34ee6db3"
+  },
   "/images/products/banana-overload-loaf.webp": {
     "w": 896,
     "h": 896,
     "v": "2b61c658"
+  },
+  "/images/products/banana-overload.webp": {
+    "w": 640,
+    "h": 640,
+    "v": "844f3150"
   },
   "/images/products/brownie-box.webp": {
     "w": 1000,
@@ -125,9 +160,14 @@
     "v": "09e2d0bf"
   },
   "/images/products/cinnamon-rolls.webp": {
-    "w": 1000,
-    "h": 1000,
-    "v": "f043a45a"
+    "w": 640,
+    "h": 640,
+    "v": "9e65dcd0"
+  },
+  "/images/products/coconut-macaron.webp": {
+    "w": 640,
+    "h": 640,
+    "v": "8c98b0df"
   },
   "/images/products/coconut-macaroons.webp": {
     "w": 700,
@@ -149,6 +189,16 @@
     "h": 863,
     "v": "90a5296e"
   },
+  "/images/products/fudgy-brownies.webp": {
+    "w": 640,
+    "h": 640,
+    "v": "55a9fb33"
+  },
+  "/images/products/garlic-bread.webp": {
+    "w": 640,
+    "h": 640,
+    "v": "81ad1005"
+  },
   "/images/products/icing-cake.webp": {
     "w": 1000,
     "h": 1000,
@@ -168,6 +218,11 @@
     "w": 1000,
     "h": 1000,
     "v": "25fd40d0"
+  },
+  "/images/products/smores-brownies.webp": {
+    "w": 640,
+    "h": 640,
+    "v": "b7ca2744"
   },
   "/images/promo-cake.webp": {
     "w": 896,

@@ -8,7 +8,7 @@ import { Promos } from "@/components/sections/promos";
 export const metadata: Metadata = {
   title: "Menu",
   description:
-    "Banana loaves, brownies, celebration cakes, cupcakes, crinkles and coconut macaroons, baked to order by Kin Kitchen.",
+    "Fudgy and s'mores brownies, banana bakes, garlic bread, cinnamon rolls and coconut macarons, with prices. Baked to order by Kin Kitchen.",
 };
 
 export default function MenuPage() {
@@ -17,7 +17,7 @@ export default function MenuPage() {
       <PageHero
         crumb="Menu"
         title="Baked to order"
-        intro="Add what you'd like to your basket and send it. We'll reply with the price, the batch date and where to pick up."
+        intro="Add what you'd like to your basket and send it. We'll reply to confirm the batch date and where to pick up."
         image="bagged-brownies.webp"
         imageAlt="A basket of individually wrapped Kin Kitchen brownies"
       />

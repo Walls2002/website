@@ -24,12 +24,14 @@ export const metadata: Metadata = {
     template: `%s | ${site.legalName}`,
   },
   description:
-    "Kin Kitchen bakes banana loaves, brownies, celebration cakes and cupcakes to order. Pre-order online and pick up in Commonwealth, Quezon City or Kelsey Hills, San Jose del Monte.",
+    "Kin Kitchen bakes brownies, banana bakes, garlic bread, cinnamon rolls and celebration cakes to order. Pre-order online and pick up in Commonwealth, Quezon City or Kelsey Hills, San Jose del Monte.",
   openGraph: {
     type: "website",
     siteName: site.legalName,
     locale: "en_PH",
-    images: [{ url: "/images/hero-assortment.webp", width: 1440, height: 1538, alt: "Kin Kitchen banana loaves, cookies and brownies" }],
+    // Messenger and Facebook want a wide JPEG or PNG (1200 by 630); a WebP or a tall image gives no preview.
+    // Rename the file to replace it: link previews are cached by URL.
+    images: [{ url: "/og-1.jpg", width: 1200, height: 630, type: "image/jpeg", alt: "Kin Kitchen banana bakes, muffins and brownies in foil tins" }],
   },
   icons: {
     icon: [

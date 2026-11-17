@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { useCart } from "@/components/cart/cart-context";
+import { lineDetail, useCart } from "@/components/cart/cart-context";
 import {
   ArrowRightIcon,
   BagIcon,
@@ -16,20 +16,19 @@ import {
 } from "@/components/icons";
 import { Logo } from "@/components/layout/logo";
 import { ButtonLink } from "@/components/ui/button";
-import { categories } from "@/lib/data";
+import { categories, categoryImage, peso } from "@/lib/data";
 import { gsap, MOTION_OK, prefersReducedMotion, releaseIntro, useGSAP } from "@/lib/gsap";
 import { handleSamePageClick } from "@/lib/same-page";
 import { site } from "@/lib/site";
 
 type Panel = "menu" | "cart" | null;
 
-const categoryLabel = new Map(categories.map((c) => [c.slug, c.label]));
 
 const isActive = (pathname: string, href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
 export function Header() {
   const pathname = usePathname();
-  const { lines, count, setQty, pulse } = useCart();
+  const { lines, count, total, setQty, pulse } = useCart();
   const [panel, setPanel] = useState<Panel>(null);
   const [drawer, setDrawer] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
@@ -311,7 +310,7 @@ export function Header() {
                                 >
                                   <span className="grid size-12 shrink-0 place-items-center">
                                     <Image
-                                      src={`/images/categories/${c.slug}.webp`}
+                                      src={categoryImage(c)}
                                       alt=""
                                       width={40}
                                       height={40}
@@ -395,9 +394,12 @@ export function Header() {
                     // The list scrolls, so it animates as one block: a translated child would
                     // overflow the scroller mid-entrance and flash its scrollbar (AGENTS.md).
                     <ul data-panel-item className="max-h-[45vh] space-y-2 overflow-x-hidden overflow-y-auto overscroll-contain">
-                      {lines.map(({ product, qty }) => (
+                      {lines.map((line) => {
+                        const { key, product, qty } = line;
+                        const what = `${product.name}, ${lineDetail(line)}`;
+                        return (
                         <li
-                          key={product.slug}
+                          key={key}
                           className="flex items-center gap-3 rounded-xl p-1.5 hover:bg-oat/60"
                         >
                           <Image
@@ -409,7 +411,8 @@ export function Header() {
                           />
                           <div className="min-w-0 flex-1">
                             <p className="truncate text-sm font-medium text-ink">{product.name}</p>
-                            <p className="text-sm text-muted">{categoryLabel.get(product.category)}</p>
+                            <p className="text-[13px] leading-snug text-muted">{lineDetail(line)}</p>
+                            <p className="text-[13px] font-semibold text-ink tabular-nums">{peso(line.total)}</p>
                           </div>
                           <div
                             data-allow-number
@@ -417,8 +420,8 @@ export function Header() {
                           >
                             <button
                               type="button"
-                              aria-label={`Remove one ${product.name}`}
-                              onClick={() => setQty(product.slug, qty - 1)}
+                              aria-label={`Remove one ${what}`}
+                              onClick={() => setQty(key, qty - 1)}
                               className="grid size-8 place-items-center rounded-full text-ink hover:bg-oat"
                             >
                               <MinusIcon className="size-3.5" />
@@ -426,19 +429,31 @@ export function Header() {
                             <span className="w-5 text-center text-sm font-medium">{qty}</span>
                             <button
                               type="button"
-                              aria-label={`Add one ${product.name}`}
-                              onClick={() => setQty(product.slug, qty + 1)}
+                              aria-label={`Add one ${what}`}
+                              onClick={() => setQty(key, qty + 1)}
                               className="grid size-8 place-items-center rounded-full text-ink hover:bg-oat"
                             >
                               <PlusIcon className="size-3.5" />
                             </button>
                           </div>
                         </li>
-                      ))}
+                        );
+                      })}
                     </ul>
                   )}
-                  <p data-panel-item className="mt-3 border-t border-oat-line pt-3 text-sm leading-relaxed text-muted">
-                    We confirm the price and pick-up details by message before we bake.
+                  {lines.length > 0 && (
+                    <p
+                      data-panel-item
+                      className="mt-3 flex items-baseline justify-between gap-4 border-t border-oat-line px-1.5 pt-3 text-sm font-medium text-ink"
+                    >
+                      Total <span className="text-base font-semibold tabular-nums">{peso(total)}</span>
+                    </p>
+                  )}
+                  <p
+                    data-panel-item
+                    className={`text-sm leading-relaxed text-muted ${lines.length ? "mt-1 px-1.5" : "mt-3 border-t border-oat-line pt-3"}`}
+                  >
+                    We confirm your order and pick-up details by message before we bake.
                   </p>
                   <ButtonLink
                     data-panel-item
@@ -536,7 +551,7 @@ export function Header() {
                       className="flex flex-col items-center gap-1.5 rounded-xl bg-latte-soft px-1 py-3 text-xs font-semibold text-ink"
                     >
                       <Image
-                        src={`/images/categories/${c.slug}.webp`}
+                        src={categoryImage(c)}
                         alt=""
                         width={40}
                         height={40}

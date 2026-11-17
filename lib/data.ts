@@ -1,142 +1,155 @@
 import { pickupPoints, site } from "@/lib/site";
 
-export type CategorySlug = "loaves" | "brownies" | "cakes" | "cupcakes" | "treats";
+export type CategorySlug = "brownies" | "loaves" | "breads" | "treats";
 
-export const categories: { slug: CategorySlug; label: string; blurb: string }[] = [
-  { slug: "loaves", label: "Banana loaves", blurb: "Baked in their own tins" },
-  { slug: "brownies", label: "Brownies", blurb: "Fudgy, boxed or by the piece" },
-  { slug: "cakes", label: "Cakes", blurb: "Icing or full fondant" },
-  { slug: "cupcakes", label: "Cupcakes", blurb: "Swirled and boxed to gift" },
-  { slug: "treats", label: "Cookies & bites", blurb: "Crinkles, macaroons, rolls" },
+/** `image` is the file in public/images/categories (bump its name to replace it, never overwrite). */
+export const categories: { slug: CategorySlug; label: string; blurb: string; image: string }[] = [
+  { slug: "brownies", label: "Brownies", blurb: "Fudgy or s'mores, by the piece or boxed", image: "brownies-2" },
+  { slug: "loaves", label: "Banana bakes", blurb: "Streusel, overload and muffins", image: "loaves-2" },
+  { slug: "breads", label: "Bread and rolls", blurb: "Garlic bread and cinnamon rolls", image: "breads" },
+  { slug: "treats", label: "Sweet bites", blurb: "Coconut macarons by the box", image: "treats-2" },
 ];
 
+export const categoryImage = (c: { image: string }) => `/images/categories/${c.image}.webp`;
+
 /**
- * The menu, from Kin Kitchen's own posts. Prices are left off on purpose: they
- * change with size, design and batch, so the owner quotes them when confirming
- * an order. `order` sets the default menu order (lower comes first).
+ * A size on the menu. `count` is how many pieces it holds, so the saving on a
+ * box is worked out from the single-piece price, never typed in.
+ */
+export type ProductOption = { id: string; label: string; price: number; count?: number };
+export type Flavour = { id: string; label: string };
+
+/**
+ * The menu, from Kin Kitchen's own menu flyer, with its prices. Photos are
+ * `public/images/products/<slug>.webp`. `order` sets the default menu order
+ * (lower comes first).
  */
 export type Product = {
   slug: string;
   name: string;
   category: CategorySlug;
   description: string;
+  options: ProductOption[];
+  /** Chosen once per basket line, e.g. the glaze on a cinnamon roll ("Vanilla" + "Glaze" reads "Vanilla glaze"). */
+  flavours?: { name: string; choices: Flavour[] };
   favourite?: boolean;
   order: number;
 };
 
 export const products: Product[] = [
   {
-    slug: "banana-cinnamon-streusel-loaf",
-    name: "Banana cinnamon streusel loaf",
-    category: "loaves",
-    description: "Banana loaf under a thick cinnamon crumble, baked in its own tin.",
+    slug: "fudgy-brownies",
+    name: "Fudgy brownies",
+    category: "brownies",
+    description: "Dense, fudgy squares studded with chocolate chips.",
+    options: [
+      { id: "piece", label: "Per piece", price: 29, count: 1 },
+      { id: "box-6", label: "Box of 6", price: 159, count: 6 },
+      { id: "box-12", label: "Box of 12", price: 279, count: 12 },
+    ],
     favourite: true,
     order: 1,
   },
   {
-    slug: "brownie-box",
-    name: "Brownie box of 8",
+    slug: "smores-brownies",
+    name: "S'mores brownies",
     category: "brownies",
-    description: "Fudgy squares with a salted caramel or chocolate drizzle.",
+    description: "Fudgy brownie under toasted marshmallows, graham and chocolate chips.",
+    options: [
+      { id: "piece", label: "Per piece", price: 34, count: 1 },
+      { id: "box-6", label: "Box of 6", price: 179, count: 6 },
+      { id: "box-12", label: "Box of 12", price: 309, count: 12 },
+    ],
     favourite: true,
     order: 2,
   },
   {
-    slug: "banana-choco-chip-loaf",
-    name: "Banana loaf with choco chips",
+    slug: "banana-cinnamon-streusel",
+    name: "Banana cinnamon streusel",
     category: "loaves",
-    description: "Soft banana bread studded with chocolate chips.",
+    description: "Banana cake under a thick cinnamon crumble, baked in its own tin.",
+    options: [{ id: "tin", label: "500 ml tin", price: 149 }],
     favourite: true,
     order: 3,
   },
   {
-    slug: "icing-cake",
-    name: "Icing cake, 6 by 2",
-    category: "cakes",
-    description: "Buttercream piped in your colours, with your message on top.",
-    favourite: true,
+    slug: "banana-overload",
+    name: "Banana overload",
+    category: "loaves",
+    description: "Banana cake topped with sliced almonds and chocolate chips.",
+    options: [{ id: "tin", label: "500 ml tin", price: 149 }],
     order: 4,
   },
   {
-    slug: "banana-overload-loaf",
-    name: "Banana overload loaf",
+    slug: "banana-muffins",
+    name: "Banana muffins",
     category: "loaves",
-    description: "The fully loaded banana loaf, sealed with a thank-you sticker.",
+    description: "Bite-size banana muffins with chocolate chips, for sharing round.",
+    options: [{ id: "pack-30", label: "Pack of 30", price: 299 }],
     order: 5,
-  },
-  {
-    slug: "fondant-cake",
-    name: "Full fondant cake",
-    category: "cakes",
-    description: "Smooth fondant, sugar flowers and lettering for the big days.",
-    order: 6,
-  },
-  {
-    slug: "message-brownie-cake",
-    name: "Message brownie tray",
-    category: "brownies",
-    description: "A tray of brownies piped with your greeting and fondant toppers.",
-    order: 7,
-  },
-  {
-    slug: "cupcake-box",
-    name: "Cupcake box",
-    category: "cupcakes",
-    description: "Rose-swirled buttercream cupcakes in the colours of your party.",
-    order: 8,
-  },
-  {
-    slug: "coconut-macaroons",
-    name: "Coconut macaroons",
-    category: "treats",
-    description: "Chewy, golden coconut macaroons baked in little paper cups.",
-    order: 9,
-  },
-  {
-    slug: "number-cake",
-    name: "Number cake",
-    category: "cakes",
-    description: "Your age or year cut in cake and crowned with piped florals.",
-    order: 10,
-  },
-  {
-    slug: "crinkles",
-    name: "Chocolate crinkles",
-    category: "treats",
-    description: "Soft chocolate cookies rolled in powdered sugar till they crack.",
-    order: 11,
-  },
-  {
-    slug: "brownies-by-the-piece",
-    name: "Brownies by the piece",
-    category: "brownies",
-    description: "One fudgy brownie, wrapped on its own for sharing out.",
-    order: 12,
-  },
-  {
-    slug: "message-cupcakes",
-    name: "Topper cupcakes",
-    category: "cupcakes",
-    description: "Cupcakes capped with fondant letters and shapes for a theme.",
-    order: 13,
-  },
-  {
-    slug: "chocolate-chip-cookies",
-    name: "Chocolate chip cookies",
-    category: "treats",
-    description: "Little chocolate chip cookies, heaped into a box.",
-    order: 14,
   },
   {
     slug: "cinnamon-rolls",
     name: "Cinnamon rolls",
+    category: "breads",
+    description: "Soft cinnamon swirls under a vanilla or cream cheese glaze.",
+    options: [
+      { id: "piece", label: "Per piece", price: 59, count: 1 },
+      { id: "pair", label: "2 pieces", price: 109, count: 2 },
+    ],
+    flavours: {
+      name: "Glaze",
+      choices: [
+        { id: "vanilla", label: "Vanilla" },
+        { id: "cream-cheese", label: "Cream cheese" },
+      ],
+    },
+    favourite: true,
+    order: 6,
+  },
+  {
+    slug: "garlic-bread",
+    name: "Garlic bread",
+    category: "breads",
+    description: "A round loaf cut deep and baked with garlic butter and herbs.",
+    options: [
+      { id: "piece", label: "Per piece", price: 89, count: 1 },
+      { id: "pair", label: "2 pieces", price: 169, count: 2 },
+    ],
+    order: 7,
+  },
+  {
+    slug: "coconut-macaron",
+    name: "Coconut macaron",
     category: "treats",
-    description: "Soft rolls with vanilla sauce and cream cheese on the side.",
-    order: 15,
+    description: "Golden coconut macarons with a chocolate centre, in little paper cups.",
+    options: [{ id: "box-8", label: "Box of 8", price: 55 }],
+    order: 8,
   },
 ];
 
 export const productBySlug = new Map(products.map((p) => [p.slug, p]));
+
+const pesoFormat = new Intl.NumberFormat(site.locale, { maximumFractionDigits: 0 });
+
+/** "₱1,299" */
+export const peso = (n: number) => `₱${pesoFormat.format(n)}`;
+
+/** The lowest price on a product, for "from" lines and sorting. */
+export const fromPrice = (p: Product) => Math.min(...p.options.map((o) => o.price));
+
+/** What a box saves against buying the pieces one by one (0 when there's no single price). */
+export function savingOf(p: Product, o: ProductOption) {
+  const single = p.options.find((x) => x.count === 1);
+  if (!single || !o.count || o.count < 2) return 0;
+  return Math.max(0, single.price * o.count - o.price);
+}
+
+/**
+ * The item name sent with an order: "Fudgy brownies · Box of 6", the same
+ * "Product · Size" shape the CRM's price list uses, so it can price the line.
+ */
+export const itemName = (p: Product, o: ProductOption) => (p.options.length > 1 ? `${p.name} · ${o.label}` : p.name);
 
 /**
  * The info band under the home hero (and on /about): what a visitor needs to
@@ -166,7 +179,7 @@ export const promises = [
 export const faqs = [
   {
     q: "How do pre-orders work?",
-    a: "We open orders for each batch for a few days and post the pick-up date with it. Add what you'd like to your basket and send it. We'll message you back to confirm your order, the price and the pick-up details.",
+    a: "We open orders for each batch for a few days and post the pick-up date with it. Add what you'd like to your basket and send it. We'll message you back to confirm your order and the pick-up details.",
   },
   {
     q: "Where do I pick up my order?",
@@ -177,8 +190,8 @@ export const faqs = [
     a: "Yes. Tell us the date, the message and the colours you have in mind using the order form, or send a photo on Messenger. We make icing cakes and full fondant cakes, plus message brownies and cupcakes to match.",
   },
   {
-    q: "Why are there no prices on the menu?",
-    a: "Prices change with the size, the design and the batch, so we send yours when we confirm your order. Nothing is baked until you've said yes.",
+    q: "How much is a celebration cake?",
+    a: "It depends on the size and the design, so cakes aren't on the price list. Send us your idea and we'll reply with the price before anything is baked.",
   },
 ];
 

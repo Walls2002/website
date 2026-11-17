@@ -80,7 +80,7 @@ function findRoutes(dir) {
     return [rel ? `/${rel}/` : "/"];
   });
 }
-const routes = [...findRoutes(OUT).sort(), "/menu/?category=cakes", "/no-such-page/"];
+const routes = [...findRoutes(OUT).sort(), "/menu/?category=breads", "/no-such-page/"];
 
 const browser = await chromium.launch();
 let failures = 0;
@@ -348,7 +348,7 @@ for (const width of [1440, 390]) {
     await page.goto(base + "/", { waitUntil: "networkidle" });
     await settle(page);
     // Three lines in the basket: the list then has rows that could overflow it mid-entrance.
-    const adds = page.getByRole("button", { name: /^Add .* to basket$/ });
+    const adds = page.getByRole("button", { name: /^Add .* to your basket, / });
     for (let i = 0; i < 3; i++) await adds.nth(i).click();
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
     await page.waitForTimeout(300);
@@ -372,7 +372,7 @@ for (const width of [1440, 390]) {
 
     /* Order: the menu picker, the form's consent error and its sent state. */
     // Start from an empty basket (the header checks above filled it), so the picker opens.
-    await page.evaluate(() => window.localStorage.removeItem("kin-kitchen-basket"));
+    await page.evaluate(() => window.localStorage.removeItem("kin-kitchen-basket-2"));
     await page.goto(base + "/order/", { waitUntil: "networkidle" });
     await settle(page);
     await datePickerChecks(page, "/order/");
@@ -382,9 +382,9 @@ for (const width of [1440, 390]) {
     await page.getByRole("button", { name: /^Send order$/ }).click();
     await page.waitForTimeout(300);
     if (!(await page.getByRole("alert").filter({ hasText: /at least one treat/i }).count())) fail("/order/ empty basket was not flagged");
-    await page.getByRole("button", { name: /^Add .* to your order$/ }).first().click();
+    await page.getByRole("button", { name: /^Add .* to your basket, / }).first().click();
     await page.waitForTimeout(300);
-    if (!(await page.getByRole("button", { name: /^Add one more / }).count())) fail("/order/ menu picker did not add to the basket");
+    if (!(await page.getByRole("button", { name: /^Add one / }).count())) fail("/order/ menu picker did not add to the basket");
     await aiTells(page, "/order/ menu picker");
     await page.getByRole("button", { name: /^Send (order|message)$/ }).click();
     await page.waitForTimeout(400);
