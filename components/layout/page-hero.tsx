@@ -21,7 +21,7 @@ export function PageHero({ title, intro, image, imageAlt, crumb }: Props) {
     // The card and image enter via CSS (see globals.css) so the LCP image paints pre-hydration.
     gsap
       .timeline({ defaults: { ease: "power3.out" }, delay: 0.25 })
-      .from("[data-ph-line]", { yPercent: 110, duration: 0.8, stagger: 0.1 })
+      .from("[data-ph-line]", { yPercent: 170, duration: 0.8, stagger: 0.1 })
       .from("[data-ph-fade]", { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08 }, "-=0.5");
     gsap.to("[data-ph-image]", {
       yPercent: -8,
@@ -41,7 +41,7 @@ export function PageHero({ title, intro, image, imageAlt, crumb }: Props) {
             <span aria-hidden="true">/</span>
             <span className="text-brand">{crumb}</span>
           </nav>
-          <h1 className="mt-5 overflow-hidden font-serif text-[clamp(2.25rem,1.6rem+2.8vw,3.75rem)] leading-[1.08] text-ink">
+          <h1 className="line-mask mt-5 font-serif text-[clamp(2.25rem,1.6rem+2.8vw,3.75rem)] leading-[1.08] text-ink">
             <span data-intro data-ph-line className="block">
               {title}
             </span>

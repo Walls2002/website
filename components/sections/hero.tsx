@@ -39,7 +39,7 @@ export function Hero() {
 
   useMotion(ref, (el) => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    tl.from("[data-hero-line]", { yPercent: 115, duration: 0.9, stagger: 0.12 })
+    tl.from("[data-hero-line]", { yPercent: 170, duration: 0.9, stagger: 0.12 })
       .from("[data-hero-accent]", { rotate: 6, transformOrigin: "0% 100%", duration: 0.9, stagger: 0.24 }, "<")
       .from("[data-heart]", { drawSVG: "0%", duration: 1.1, ease: "power2.inOut" }, "-=0.5")
       .from("[data-hero-fade]", { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.1, clearProps: "transform" }, "-=0.9")
@@ -71,24 +71,24 @@ export function Hero() {
     <section ref={ref} aria-labelledby="hero-title" className="overflow-hidden">
       <div className="hero-fit container-site">
         <h1 id="hero-title" className={`relative [grid-area:title] font-serif text-ink ${headlineSize}`}>
-          <span className="block overflow-hidden pb-[0.1em]">
+          <span className="line-mask block pb-[0.1em]">
             <span data-intro data-hero-line className="block text-[1em] leading-[1.2]">
               Sweet
             </span>
           </span>
-          <span className="block overflow-hidden pb-[0.12em]">
+          <span className="line-mask block pb-[0.12em]">
             <span data-intro data-hero-line className="block text-[2.13em] leading-[1] text-brand italic">
               <span data-hero-accent className="inline-block">
                 memories,
               </span>
             </span>
           </span>
-          <span className="block overflow-hidden pb-[0.1em]">
+          <span className="line-mask block pb-[0.1em]">
             <span data-intro data-hero-line className="block text-[1em] leading-[1.2]">
               created
             </span>
           </span>
-          <span className="block overflow-hidden pb-[0.12em]">
+          <span className="line-mask block pb-[0.12em]">
             <span data-intro data-hero-line className="block text-[2.13em] leading-[1] text-brand italic">
               <span data-hero-accent className="inline-block">
                 together.

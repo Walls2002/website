@@ -253,6 +253,16 @@ html.motion-pending [data-intro] {
   }
 }
 
+/*
+ * Mask for a headline line that slides up into place. `overflow: hidden` clips at
+ * the line box, which shaves off descenders and italic overhangs ("together.");
+ * a clip-path with negative insets reaches past the box without changing layout.
+ * The line starts at yPercent 170 so it is fully below this larger window.
+ */
+.line-mask {
+  clip-path: inset(-0.3em -0.4em -0.5em -0.3em);
+}
+
 /* Hide scrollbars on horizontal snap rails while keeping them scrollable. */
 .no-scrollbar {
   scrollbar-width: none;

@@ -211,8 +211,8 @@ export const testimonials = [
 export const kitchenSteps = [
   {
     title: "Baked in small batches",
-    image: "about-oven",
-    alt: "A tray of brownies baking in the oven",
+    image: "about-batch",
+    alt: "A batch of banana loaves with almonds and chocolate chips, lidded and ready to go",
     text: "Each pre-order is baked for its pick-up date, one tray at a time.",
   },
   {

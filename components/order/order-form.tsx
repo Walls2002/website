@@ -140,12 +140,14 @@ export function OrderForm() {
     const form = new FormData(e.currentTarget);
     const text = (name: string) => String(form.get(name) ?? "").trim();
     const point = pickupPoints.find((p) => p.value === pickup);
+    const facebook = reply === "Messenger" ? text("facebook") : "";
     const payload: OrderPayload = {
       kind: enquiry,
       customer: text("name"),
       phone: text("phone"),
       email: text("email"),
-      contact_pref: reply,
+      // Rides in the reply preference so the CRM inbox, the email and the order prefill all show it.
+      contact_pref: facebook ? `${reply} (Facebook name: ${facebook})` : reply,
       pickup_point: enquiry === "question" ? "" : (point?.label ?? ""),
       pickup_date: enquiry === "question" ? null : date || null,
       occasion: enquiry === "custom-cake" ? occasion : "",
@@ -345,6 +347,24 @@ export function OrderForm() {
               <div data-field>
                 <Select label="Best way to reply" name="reply" options={replyOptions} value={reply} onChange={setReply} />
               </div>
+              {/* Messenger can't be reached from a phone number: the kitchen searches the name instead. */}
+              {reply === "Messenger" && (
+                <label className="block sm:col-span-2">
+                  <span className="mb-2 block text-sm font-medium text-ink">Your name on Facebook</span>
+                  <input
+                    required
+                    name="facebook"
+                    maxLength={100}
+                    autoComplete="off"
+                    placeholder="As it shows on your profile"
+                    aria-describedby="facebook-hint"
+                    className={inputCls}
+                  />
+                  <span id="facebook-hint" className="mt-1.5 block text-[13px] text-muted">
+                    So we can find you and message you back.
+                  </span>
+                </label>
+              )}
 
               {!isQuestion && (
                 <>

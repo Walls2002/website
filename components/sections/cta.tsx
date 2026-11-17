@@ -30,7 +30,7 @@ export function Cta({
       ease: "power3.out",
       clearProps: "transform",
     })
-      .from("[data-cta-line]", { yPercent: 110, duration: 0.8, stagger: 0.1, ease: "power3.out" }, "-=0.5")
+      .from("[data-cta-line]", { yPercent: 170, duration: 0.8, stagger: 0.1, ease: "power3.out" }, "-=0.5")
       .from("[data-cta-fade]", { y: 16, autoAlpha: 0, duration: 0.5, stagger: 0.08, clearProps: "transform" }, "-=0.4")
       .from("[data-cta-art]", { x: 80, rotate: 6, autoAlpha: 0, duration: 1.1, ease: "power3.out" }, 0.2)
       .from("[data-cta-spark]", { scale: 0, autoAlpha: 0, duration: 0.6, stagger: 0.08, ease: "back.out(3)" }, "-=0.6");
@@ -55,12 +55,12 @@ export function Cta({
         >
           <div className="relative z-10 px-6 pt-10 sm:px-10 md:w-[50%] md:py-14 lg:px-14">
             <h2 id="cta-title" className="font-serif text-[clamp(2.1rem,1.5rem+2vw,3.25rem)] leading-[1.08] font-black! tracking-[-0.01em]">
-              <span className="block overflow-hidden">
+              <span className="line-mask block">
                 <span data-cta-line className="block">
                   {title[0]}
                 </span>
               </span>
-              <span className="block overflow-hidden">
+              <span className="line-mask block">
                 <span data-cta-line className="block">
                   {title[1]}
                 </span>
